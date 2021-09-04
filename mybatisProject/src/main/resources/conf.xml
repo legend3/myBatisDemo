@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--    mybatis配置文件    -->
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatisproject?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;characterEncoding=utf-8&amp;autoReconnect=true"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--    需要加载的映射文件    -->
+        <!--  1.在pom文件 标明xml的位置   -->
+<!--        <mapper resource="org/legend/mybatis/entity/personMapper.xml"/>&lt;!&ndash;    文件用"/"    &ndash;&gt;-->
+        <!--  2.直接放到resources根目录中  -->
+        <mapper resource="personMapper.xml"/><!--    文件用"/"    -->
+    </mappers>
+</configuration>
