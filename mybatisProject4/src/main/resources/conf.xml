@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-    1.联网时自动从http://mybatis.org/dtd/mybatis-3-config.dtd获取conf.xml的标签
-    2.也可以通过http://mybatis.org/dtd/mybatis-3-config.dtd下载到本地,再上传到eclipse/idea中
--->
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<!-- 第三章   1.可以将配置信息 单独放入 db.properties文件中，然后再 -->
+
     <properties  resource="db.properties"/>
 
-    <!--
-        全局参数
-        <settings>
-                <setting name="cacheEnabled" value="false"  />
-                <setting name="lazyLoadingEnabled" value="false"  />
-        </settings>
- 	-->
+    <!-- 
+    <settings>
+            <setting name="cacheEnabled" value="false"  />
+            <setting name="lazyLoadingEnabled" value="false"  />
+    </settings>
+     -->
     <!-- 设置单个/多个别名 -->
     <typeAliases>
         <!-- 单个别名 （别名 忽略大小写） -->
-<!--         <typeAlias type="org.legend.Student" alias="student"/>-->
+        <!-- <typeAlias type="org.legend.mybatis.entity.Student" alias="student"/> -->
         <!--  批量定义别名  （别名 忽略大小写），以下会自动将该包中的所有类 批量定义别名： 别名就是类名（不带包名，忽略大小写）   -->
         <package name="org.legend.mybatis.entity"/>
     </typeAliases>
 
-    <!-- 第二章 通过environments的default值 和  environment的 id 来指定 MyBatis运行时的数据库环境  "当前运行哪个环境"-->
-    <environments default="mysql">
-        <!-- 例如, (此时是)开发环境（自己的计算机） -->
-        <environment id="mysql">
 
+    <typeHandlers>
+        <typeHandler handler="org.legend.mybatis.converter.BooleanAndIntConverter" javaType="Boolean" jdbcType="INTEGER" />
+    </typeHandlers>
+
+    <!-- 通过environments的default值 和  environment的 id 来指定 MyBatis运行时的数据库环境-->
+    <environments default="development">
+        <!-- 开发环境（自己的计算机） -->
+        <environment id="development">
             <!-- 事务提交方式：
-                    JDBC:利用JDBC方式处理事务（commit  rollback  close）
-                    MANAGED：将事务交由 其他组件去托管（spring ,jobss）,默认 会关闭连接。
-
-                <transactionManager type="MANAGED"/>
-                    <property name="closeConnection" value="false"/>
-                 -->
-            <transactionManager type="JDBC"/>
-
+                JDBC:利用JDBC方式处理事务（commit  rollback  close）
+                MANAGED：将事务交由 其他组件去托管（spring ,jobss）,默认 会关闭连接。
+            
+            <transactionManager type="MANAGED"/>
+                <property name="closeConnection" value="false"/>
+             -->
+            <transactionManager type="JDBC" />
             <!-- 数据源类型：
-						UNPOOLED:传统的JDBC模式（每次访问数据库，均需要 打开、关闭等数据库操作，但是 打开、关闭数据库是比较消耗性能的）
-						POOLED：使用数据库连接池
-						JNDI：从tomcat中获取一个内置的数据库连接池 （数据库连接池-数据源  ）
-				 -->
+                    UNPOOLED:传统的JDBC模式（每次访问数据库，均需要 打开、关闭等数据库操作，但是 打开、关闭数据库是比较消耗性能的）
+                    POOLED：使用数据库连接池
+                    JNDI：从tomcat中获取一个内置的数据库连接池 （数据库连接池-数据源  ）
+             -->
+
             <dataSource type="POOLED">
+
+
                 <!-- 配置数据库信息 -->
                 <property name="driver" value="${driver}"/>
                 <property name="url" value="${url}"/>
@@ -52,7 +53,7 @@
         </environment>
 
         <!-- 真正的项目应该在   发布的那台计算机上运行 -->
-        <environment id="oracle">
+        <environment id="shishi">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <!-- 配置数据库信息 -->
@@ -63,24 +64,22 @@
             </dataSource>
         </environment>
 
-        <!-- 测试环境的数据库 -->
-        <environment id="Oceanbase">
+
+        <!--  -->
+        <environment id="test">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <!-- 配置数据库信息 -->
-                <property name="driver" value=""/>
-                <property name="url" value="jdbc:oceanbase:"/>
-                <property name="username" value=""/>
-                <property name="password" value=""/>
+                <property name="driver" value="oracle.jdbc.OracleDriver"/>
+                <property name="url" value="jdbc:oracle:thin:@192.168.1.111:1521:ORCL"/>
+                <property name="username" value="scott"/>
+                <property name="password" value="tiger"/>
             </dataSource>
         </environment>
     </environments>
 
     <mappers>
-        <!--    需要加载的映射文件
-                    conf.xml连接数据库
-                        "打通数据库与映射SQL"
-        -->
-        <mapper resource="org/legend/mybatis/mapper/studentMapper.xml"/>  <!--    文件用"/"    -->
+        <!-- 加载映射文件 -->
+        <mapper resource="org/legend.mybatis/mapper/studentMapper.xml"/>
     </mappers>
 </configuration>

@@ -1,48 +1,28 @@
 package org.legend.mybatis;
 
-import org.legend.mybatis.mapper.StudentMapper;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.legend.mybatis.entity.Student;
-import org.testng.annotations.Test;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import org.legend.mybatis.entity.Address;
+import org.legend.mybatis.entity.Student;
+import org.legend.mybatis.mapper.StudentMapper;
 
 public class test {
-    @Test
-    //查询单个学生
-    public void test_selectOne() throws IOException {
-        //Connection(JDBC) -  SqlSession操作MyBatis
-        Reader reader = Resources.getResourceAsReader("conf.xml");
-
-        //reader  ->SqlSession
-        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(reader, "mysql");//可以通过build的第二参数 指定数据库环境.与默认的conf.xml文件中default指定同等效果
-        SqlSession session =  sessionFactory.openSession();
-
-        //调Mapper接口,取代statement
-        //        String statement = "studentMapper."+"queryAllStudents";
-        //通过session对象获取接口（session.getMapper(接口.class);），再调用该接口中的方法，程序会自动执行该方法对应的SQL。
-        StudentMapper studentMapper = session.getMapper(StudentMapper.class);//获取接口，就是获取映射文件！
-        //调用接口方法，从而定位对应的sql语句;(不需要实现类实现接口！直接调用接口方法找sql语句)
-        Student student = studentMapper.queryStudentByStuno(1);
-        System.out.println(student);
-        session.close();
-    }
-    @Test
     //查询单个学生（使用了转换器）
-    public void queryStudentByStunoWithConverter() throws IOException {
+    public static void queryStudentByStunoWithConverter() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
         //reader  ->SqlSession
 
         //可以通过build的第二参数 指定数据库环境
-        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"mysql") ;
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
         SqlSession session = sessionFacotry.openSession() ;
 
         StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;
@@ -51,43 +31,154 @@ public class test {
         System.out.println(student);
         session.close();
     }
-    @Test
+
+    //查询单个学生
+    public static void queryStudentByStuno() throws IOException {
+        //Connection -  SqlSession操作MyBatis
+        //conf.xml - > reader
+        Reader reader = Resources.getResourceAsReader("conf.xml") ;
+        //reader  ->SqlSession
+
+        //可以通过build的第二参数 指定数据库环境
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
+        SqlSession session = sessionFacotry.openSession() ;
+
+        StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;
+        Student student = studentMapper.queryStudentByStuno(2) ;//接口中的方法->SQL语句
+
+        System.out.println(student);
+        session.close();
+    }
+
+    //查询单个学生byName
+    public static void queryStudentByStuname() throws IOException {
+        //Connection -  SqlSession操作MyBatis
+        //conf.xml - > reader
+        Reader reader = Resources.getResourceAsReader("conf.xml") ;
+        //reader  ->SqlSession
+
+        //可以通过build的第二参数 指定数据库环境
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
+        SqlSession session = sessionFacotry.openSession() ;
+
+        StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;
+        Student student = studentMapper.queryStudentByStuname("ww53") ;//接口中的方法->SQL语句
+
+        System.out.println(student);
+        session.close();
+    }
+
     //查询全部学生
-    public void queryAllStudents() throws IOException {
+    public static void queryAllStudents() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
         //reader  ->SqlSession
         //可以通过build的第二参数 指定数据库环境
-        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"mysql") ;
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
         SqlSession session = sessionFacotry.openSession() ;
 
-//        String statement = "studentMapper."+"queryAllStudents";
-        StudentMapper studentMapper = session.getMapper(StudentMapper.class);
-        List<Student> students = studentMapper.queryAllStudents();
+
+//					List<Student> students = session.selectList(statement ) ;
+        StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
+        List<Student> students = studentMapper.queryAllStudents() ;//接口的方法->SQL
+
         System.out.println(students);
         session.close();
     }
 
-    @Test
-    //增加学生
-    public void addStudent() throws IOException {
+    //查询全部学生，并且根据姓名排序
+    public static void queryStudentOrderByColumn() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
         //reader  ->SqlSession
         //可以通过build的第二参数 指定数据库环境
-        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"mysql") ;
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
         SqlSession session = sessionFacotry.openSession() ;
 
-        StudentMapper studentMapper = session.getMapper(StudentMapper.class);
-        Student student = new Student(3,"ww",25,"s1");
-        studentMapper.addStudent(student);
-        session.commit(); //提交事务
-        System.out.println("增加学生数据行成功！");
+
+        StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
+        List<Student> students = studentMapper.queryStudentOrderByColumn("stuno") ;//接口的方法->SQL
+
+        System.out.println(students);
         session.close();
     }
-    @Test
+
+    //根据姓名或年龄查询学生
+    public static  void queryStudentBystuageOrstuName() throws IOException {
+        //Connection -  SqlSession操作MyBatis
+        //conf.xml - > reader
+        Reader reader = Resources.getResourceAsReader("conf.xml") ;
+        //reader  ->SqlSession
+        //可以通过build的第二参数 指定数据库环境
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
+        SqlSession session = sessionFacotry.openSession() ;
+
+
+        StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
+        Student student = new Student();
+        student.setStuAge(24);
+        student.setStuName("w");
+        List<Student> students = studentMapper.queryStudentBystuageOrstuName(student) ;//接口的方法->SQL
+
+        System.out.println(students);
+        session.close();
+    }
+    //根据地址查学生
+    public static  void queryStudentByaddress() throws IOException {
+        //Connection -  SqlSession操作MyBatis
+        //conf.xml - > reader
+        Reader reader = Resources.getResourceAsReader("conf.xml") ;
+        //reader  ->SqlSession
+        //可以通过build的第二参数 指定数据库环境
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
+        SqlSession session = sessionFacotry.openSession() ;
+
+
+        StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
+// 			Address address = new Address();
+// 			address.setHomeAddress("xa");
+// 			address.setSchoolAddress("x");
+
+        Student student = new Student();
+        Address address = new Address();
+        address.setHomeAddress("xa");
+        address.setSchoolAddress("xxxxxx");
+        student.setAddress(address);
+
+// 			List<Student> students = studentMapper.queryStudentByaddress(address) ;
+        List<Student> students = studentMapper.queryStudentByaddress(student) ;
+
+        System.out.println(students);
+        session.close();
+    }
+
+
+    //增加学生
+    public static void addStudent() throws IOException {
+        //Connection -  SqlSession操作MyBatis
+        //conf.xml - > reader
+        Reader reader = Resources.getResourceAsReader("conf.xml") ;
+        //reader  ->SqlSession
+        //可以通过build的第二参数 指定数据库环境
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
+        SqlSession session = sessionFacotry.openSession() ;
+
+//					String statement = "org.lanqiao.entity.studentMapper."+"addStudent";
+        Student student = new Student(13,"ww3",23,"s3");
+
+
+//					int count = session.insert(statement, student );//statement：指定执行的SQL    student：sql中需要的参数 （ ? ? ? ）
+        StudentMapper studentMapper = session.getMapper(StudentMapper.class);
+        studentMapper.addStudent(student);
+
+        session.commit(); //提交事务
+
+        System.out.println("增加成功");
+        session.close();
+    }
+
     //增加学生（带转换器）
     public static void addStudentWithConverter() throws IOException {
         //Connection -  SqlSession操作MyBatis
@@ -95,7 +186,7 @@ public class test {
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
         //reader  ->SqlSession
         //可以通过build的第二参数 指定数据库环境
-        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"mysql") ;
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
         SqlSession session = sessionFacotry.openSession() ;
 
 //					String statement = "org.lanqiao.entity.studentMapper."+"addStudent";
@@ -112,47 +203,71 @@ public class test {
         System.out.println("增加成功");
         session.close();
     }
-    @Test
+
     //删除学生
-    public void deleteStudentByStuno() throws IOException {
+    public static void delteStudentByStuno() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
         //reader  ->SqlSession
         //可以通过build的第二参数 指定数据库环境
-        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"mysql") ;
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
         SqlSession session = sessionFacotry.openSession() ;
 
+//					String statement = "org.lanqiao.entity.studentMapper."+"deleteStudentByStuno";
+//
+//					int count = session.delete(statement,3) ;
         StudentMapper studentMapper = session.getMapper(StudentMapper.class);
-        studentMapper.deleteStudentByStuno(3);
+        studentMapper.deleteStudentByStuno(13);
+
         session.commit(); //提交事务
-        System.out.println("删除学生");
+
+        System.out.println("删除成功");
         session.close();
     }
 
-    @Test
     //修改学生
-    public void updateStudentByStuno() throws IOException {
+    public static void updateStudentByStuno() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
         //reader  ->SqlSession
         //可以通过build的第二参数 指定数据库环境
-        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"mysql") ;
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
         SqlSession session = sessionFacotry.openSession() ;
 
-        StudentMapper studentMapper = session.getMapper(StudentMapper.class);        //修改的参数
+//					String statement = "org.lanqiao.entity.studentMapper."+"updateStudentByStuno";
+        //修改的参数
         Student student = new Student();
         //修改哪个人，where stuno =2
-        student.setStuNo(2);
+//					student.setStuNo(2);
         //修改成什么样子？
-        student.setStuName("lxs");
-        student.setStuAge(44);
-        student.setGraName("s2");
+        student.setStuName("ls");
+        student.setStuAge(24);
+        student.setGraName("s1");
         //执行
+//					int count = session.update(statement,student) ;
+        StudentMapper studentMapper = session.getMapper(StudentMapper.class);
         studentMapper.updateStudentByStuno(student);
+
         session.commit(); //提交事务
-        System.out.println("修改个学生");
+
+        System.out.println("修改成功");
         session.close();
+    }
+
+    public static void main(String[] args) throws IOException {
+//		queryStudentByStunoWithConverter();
+//		queryStudentByStuno();
+//		queryStudentByStuname();
+//		queryStudentOrderByColumn();
+//		queryStudentBystuageOrstuName();
+        queryStudentByaddress();
+//		addStudentWithConverter();
+//		queryAllStudents();
+//		addStudent();
+//		delteStudentByStuno();
+//		updateStudentByStuno();
+//		queryAllStudents();
     }
 }

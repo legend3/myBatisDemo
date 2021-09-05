@@ -1,75 +1,99 @@
 package org.legend.mybatis.entity;
 
-/**
- * 补充：idea 连接数据库 并自动生成实体对象
- * https://blog.csdn.net/zhaoyy0513/article/details/103234093
- * https://blog.csdn.net/qq_27435059/article/details/52494623
- */
 public class Student {
-    private int stuNo;
-    private String stuName;
-    private int stuAge;
-    private String graName;
-    private boolean stuSex;
+	private int stuNo ;
+	private String stuName ;
+	private int stuAge ;
+	private String graName ;
+	private boolean stuSex ;
+	
+	private Address address;//家庭、学校
+	
+	
+	public Address getAddress() {
+		return address;
+	}
 
-    public Student(int stuNo, String stuName, int stuAge, String graName) {
-        this.stuNo = stuNo;
-        this.stuName = stuName;
-        this.stuAge = stuAge;
-        this.graName = graName;
-    }
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
-    public Student() {
-    }
+	public Student(int stuNo, String stuName, int stuAge, String graName) {
+		this.stuNo = stuNo;
+		this.stuName = stuName;
+		this.stuAge = stuAge;
+		this.graName = graName;
+	}
+	
+	public Student(int stuNo, String stuName, int stuAge, String graName, boolean stuSex) {
+		this.stuNo = stuNo;
+		this.stuName = stuName;
+		this.stuAge = stuAge;
+		this.graName = graName;
+		this.stuSex = stuSex;
+	}
 
-    public boolean isStuSex() {
-        return stuSex;
-    }
 
-    public void setStuSex(boolean stuSex) {
-        this.stuSex = stuSex;
-    }
 
-    public int getStuNo() {
-        return stuNo;
-    }
 
-    public void setStuNo(int stuNo) {
-        this.stuNo = stuNo;
-    }
 
-    public String getStuName() {
-        return stuName;
-    }
+	public Student() {
+	}
+	
 
-    public void setStuName(String stuName) {
-        this.stuName = stuName;
-    }
 
-    public int getStuAge() {
-        return stuAge;
-    }
 
-    public void setStuAge(int stuAge) {
-        this.stuAge = stuAge;
-    }
 
-    public String getGraName() {
-        return graName;
-    }
+	public int getStuNo() {
+		return stuNo;
+	}
 
-    public void setGraName(String graName) {
-        this.graName = graName;
-    }
 
-    @Override
-    public String toString() {
-        return "\nStudent: " +
-                " stuNo=" + this.stuNo +
-                " stuName='" + this.stuName + '\'' +
-                " stuAge=" + this.stuAge +
-                " graName='" + this.graName + '\'' +
-                " stuSex='" + this.stuSex + '\'' +
-                "\n";
-    }
+
+
+
+	public void setStuNo(int stuNo) {
+		this.stuNo = stuNo;
+	}
+
+
+
+
+
+	public boolean isStuSex() {
+		return stuSex;
+	}
+
+
+	public void setStuSex(boolean stuSex) {
+		this.stuSex = stuSex;
+	}
+
+
+	public String getStuName() {
+		return stuName;
+	}
+
+	public void setStuName(String stuName) {
+		this.stuName = stuName;
+	}
+
+	public int getStuAge() {
+		return stuAge;
+	}
+	public void setStuAge(int stuAge) {
+		this.stuAge = stuAge;
+	}
+	public String getGraName() {
+		return graName;
+	}
+	public void setGraName(String graName) {
+		this.graName = graName;
+	} 
+	
+	@Override
+	public String toString() {
+		return stuNo+"-"+this.stuName+"-"+this.stuAge+"-"+this.graName +"-性别:"+this.stuSex ;
+	}
+	
 }
