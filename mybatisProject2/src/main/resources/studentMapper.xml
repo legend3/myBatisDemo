@@ -8,7 +8,7 @@
     <!--
         parameterType:输入参数(stuNo)的类型
         resultType：查询返回结果值的类型  ，返回类型  -->
-    <select id="queryStudentByStuno" parameterType="int" resultType="org.legend.mybatis.entity.Student">
+    <select id="queryStudentByStuno" parameterType="int" resultType="org.legend.Student">
         <!--
                输入参数parameterType 和 输出参数resultType ，在形式上都只能有一个;     -如果比如输入参数涉及多个,用集合,对象.
                如果输入参数 ：是简单类型（8个基本类型+String） 是可以使用任何占位符,#{xxxx}
@@ -22,7 +22,7 @@
     </select>
 
 
-    <insert id="addStudent" parameterType="org.legend.mybatis.entity.Student" >
+    <insert id="addStudent" parameterType="org.legend.Student" >
         insert into student(stuno,stuname,stuage,graname) values(#{stuNo},#{stuName},#{stuAge},#{graName}  )
     </insert>
 
@@ -30,11 +30,11 @@
         delete from student where stuno = #{stuno}
     </delete>
 
-    <update id="updateStudentByStuno" parameterType="org.legend.mybatis.entity.Student" >
+    <update id="updateStudentByStuno" parameterType="org.legend.Student" >
         update student set stuname=#{stuName} ,stuage=#{stuAge},graname=#{graName} where stuno=#{stuNo}
     </update>
 
-    <select id="queryAllStudents"  resultType="org.legend.mybatis.entity.Student" >
+    <select id="queryAllStudents"  resultType="org.legend.Student" >
         select * from student
     </select>
 </mapper>
