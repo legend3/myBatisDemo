@@ -20,7 +20,7 @@
         <!-- 单个别名 （别名 忽略大小写） -->
 <!--         <typeAlias type="org.legend.mybatis.entity.Student" alias="student"/>-->
         <!--  批量定义别名  （别名 忽略大小写），以下会自动将该包中的所有类 批量定义别名： 别名就是类名（不带包名，忽略大小写）   -->
-        <package name="org.legend.mybatis"/>
+        <package name="org.legend.mybatis.entity"/>
     </typeAliases>
 
     <!-- 第二章 通过environments的default值 和  environment的 id 来指定 MyBatis运行时的数据库环境  "当前运行哪个环境"-->

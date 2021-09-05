@@ -121,7 +121,9 @@ k=v
 		<package name="org.lanqiao.entity"/>  
 	</typeAliases>  
 
-除了自定义别名外，MyBatis还内置了一些常见类的别名。  
+除了自定义别名外，MyBatis还内置了一些常见类的别名。
+
+![alias](MyBatis内置别名.png)
 
 ## 类型处理器（类型转换器）
 ### 1.MyBatis自带一些常见的类型处理器
