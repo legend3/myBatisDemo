@@ -12,8 +12,10 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.legend.mybatis.entity.Address;
 import org.legend.mybatis.entity.Student;
 import org.legend.mybatis.mapper.StudentMapper;
+import org.testng.annotations.Test;
 
 public class test {
+    @Test
     //查询单个学生（使用了转换器）
     public static void queryStudentByStunoWithConverter() throws IOException {
         //Connection -  SqlSession操作MyBatis
@@ -125,6 +127,7 @@ public class test {
         System.out.println(students);
         session.close();
     }
+    @Test
     //根据地址查学生
     public static  void queryStudentByaddress() throws IOException {
         //Connection -  SqlSession操作MyBatis
