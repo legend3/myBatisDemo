@@ -7,8 +7,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	<!--  后续通过  namespace.id-->
 	<!--parameterType:输入参数的类型
 	resultType：查询返回结果值的类型  ，返回类型  -->
-	
-	
+
+
+	<!--
+		1.通过接口方法传值给#{}、${}}
+		 -->
 	<select id="queryStudentByStuno" 	parameterType="int"  	resultMap="studentMapping" >
 		select * from student where stuno = ${stuNo}
 	</select>

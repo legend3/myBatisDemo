@@ -33,9 +33,9 @@ public class test {
         System.out.println(student);
         session.close();
     }
-
+    @Test
     //查询单个学生
-    public static void queryStudentByStuno() throws IOException {
+    public void queryStudentByStuno() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
@@ -51,9 +51,9 @@ public class test {
         System.out.println(student);
         session.close();
     }
-
+    @Test
     //查询单个学生byName
-    public static void queryStudentByStuname() throws IOException {
+    public void queryStudentByStuname() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
@@ -64,14 +64,14 @@ public class test {
         SqlSession session = sessionFacotry.openSession() ;
 
         StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;
-        Student student = studentMapper.queryStudentByStuname("ww53") ;//接口中的方法->SQL语句
+        Student student = studentMapper.queryStudentByStuname("jack") ;//接口中的方法->SQL语句
 
         System.out.println(student);
         session.close();
     }
-
+    @Test
     //查询全部学生
-    public static void queryAllStudents() throws IOException {
+    public void queryAllStudents() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
@@ -88,9 +88,9 @@ public class test {
         System.out.println(students);
         session.close();
     }
-
+    @Test
     //查询全部学生，并且根据姓名排序
-    public static void queryStudentOrderByColumn() throws IOException {
+    public void queryStudentOrderByColumn() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
@@ -106,9 +106,9 @@ public class test {
         System.out.println(students);
         session.close();
     }
-
+    @Test
     //根据姓名或年龄查询学生
-    public static  void queryStudentBystuageOrstuName() throws IOException {
+    public void queryStudentBystuageOrstuName() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
@@ -120,8 +120,8 @@ public class test {
 
         StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
         Student student = new Student();
-        student.setStuAge(24);
-        student.setStuName("w");
+        student.setStuAge(44);
+        student.setStuName("lxs");
         List<Student> students = studentMapper.queryStudentBystuageOrstuName(student) ;//接口的方法->SQL
 
         System.out.println(students);
@@ -129,7 +129,7 @@ public class test {
     }
     @Test
     //根据地址查学生
-    public static  void queryStudentByaddress() throws IOException {
+    public void queryStudentByaddress() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
@@ -156,10 +156,9 @@ public class test {
         System.out.println(students);
         session.close();
     }
-
-
+    @Test
     //增加学生
-    public static void addStudent() throws IOException {
+    public void addStudent() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
@@ -169,7 +168,7 @@ public class test {
         SqlSession session = sessionFacotry.openSession() ;
 
 //					String statement = "org.lanqiao.entity.studentMapper."+"addStudent";
-        Student student = new Student(13,"ww3",23,"s3");
+        Student student = new Student(3,"mike",23,"s3");
 
 
 //					int count = session.insert(statement, student );//statement：指定执行的SQL    student：sql中需要的参数 （ ? ? ? ）
@@ -181,9 +180,9 @@ public class test {
         System.out.println("增加成功");
         session.close();
     }
-
+    @Test
     //增加学生（带转换器）
-    public static void addStudentWithConverter() throws IOException {
+    public void addStudentWithConverter() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
@@ -193,7 +192,7 @@ public class test {
         SqlSession session = sessionFacotry.openSession() ;
 
 //					String statement = "org.lanqiao.entity.studentMapper."+"addStudent";
-        Student student = new Student(63,"ww53",23,"s3");
+        Student student = new Student(4,"Lily",23,"s3");
         student.setStuSex(true);//1
 
 
@@ -206,9 +205,9 @@ public class test {
         System.out.println("增加成功");
         session.close();
     }
-
+    @Test
     //删除学生
-    public static void delteStudentByStuno() throws IOException {
+    public void deleteStudentByStuno() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
@@ -221,16 +220,16 @@ public class test {
 //
 //					int count = session.delete(statement,3) ;
         StudentMapper studentMapper = session.getMapper(StudentMapper.class);
-        studentMapper.deleteStudentByStuno(13);
+        studentMapper.deleteStudentByStuno(4);
 
         session.commit(); //提交事务
 
         System.out.println("删除成功");
         session.close();
     }
-
+    @Test
     //修改学生
-    public static void updateStudentByStuno() throws IOException {
+    public void updateStudentByStuno() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
         Reader reader = Resources.getResourceAsReader("conf.xml") ;
@@ -243,7 +242,7 @@ public class test {
         //修改的参数
         Student student = new Student();
         //修改哪个人，where stuno =2
-//					student.setStuNo(2);
+        student.setStuNo(2);
         //修改成什么样子？
         student.setStuName("ls");
         student.setStuAge(24);
@@ -265,7 +264,7 @@ public class test {
 //		queryStudentByStuname();
 //		queryStudentOrderByColumn();
 //		queryStudentBystuageOrstuName();
-        queryStudentByaddress();
+//        queryStudentByaddress();
 //		addStudentWithConverter();
 //		queryAllStudents();
 //		addStudent();
