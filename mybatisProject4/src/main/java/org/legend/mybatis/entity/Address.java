@@ -1,5 +1,5 @@
 package org.legend.mybatis.entity;
-
+//嵌套类型
 public class Address {
 	private String homeAddress;
 	private String schoolAddress;
@@ -15,5 +15,5 @@ public class Address {
 	public void setSchoolAddress(String schoolAddress) {
 		this.schoolAddress = schoolAddress;
 	}
-	
+
 }

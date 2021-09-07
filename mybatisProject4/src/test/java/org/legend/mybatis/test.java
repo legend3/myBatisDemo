@@ -34,7 +34,7 @@ public class test {
         session.close();
     }
     @Test
-    //查询单个学生
+    //查询单个学生(#{}、\${}的区别:a)
     public void queryStudentByStuno() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
@@ -52,7 +52,7 @@ public class test {
         session.close();
     }
     @Test
-    //查询单个学生byName
+    //查询单个学生byName(#{}、${}的区别:b)
     public void queryStudentByStuname() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
@@ -89,7 +89,7 @@ public class test {
         session.close();
     }
     @Test
-    //查询全部学生，并且根据姓名排序
+    //查询全部学生，并且根据姓名排序(${}适合动态排序案例！)
     public void queryStudentOrderByColumn() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
@@ -107,7 +107,7 @@ public class test {
         session.close();
     }
     @Test
-    //根据姓名或年龄查询学生
+    //根据姓名或年龄查询学生(输入参数类型为对象类型时，#$值的案例！)
     public void queryStudentBystuageOrstuName() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
@@ -120,15 +120,19 @@ public class test {
 
         StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
         Student student = new Student();
-        student.setStuAge(44);
-        student.setStuName("lxs");
+        student.setStuAge(24);
+//        模糊查询，方式一：
+        student.setStuName("%m%");
+//        模糊查询，方式二：
+//        student.setStuName("m");
+        //[2-ls-24-null-性别:false, 3-mike-23-null-性别:false]
         List<Student> students = studentMapper.queryStudentBystuageOrstuName(student) ;//接口的方法->SQL
 
         System.out.println(students);
         session.close();
     }
     @Test
-    //根据地址查学生
+    //根据地址查学生(嵌套类型对象案例！)
     public void queryStudentByaddress() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
@@ -146,11 +150,11 @@ public class test {
 
         Student student = new Student();
         Address address = new Address();
-        address.setHomeAddress("xa");
-        address.setSchoolAddress("xxxxxx");
+        address.setHomeAddress("beijing");
+        address.setSchoolAddress("hangzhou");
         student.setAddress(address);
 
-// 			List<Student> students = studentMapper.queryStudentByaddress(address) ;
+// 		List<Student> students = studentMapper.queryStudentByaddress(address);
         List<Student> students = studentMapper.queryStudentByaddress(student) ;
 
         System.out.println(students);

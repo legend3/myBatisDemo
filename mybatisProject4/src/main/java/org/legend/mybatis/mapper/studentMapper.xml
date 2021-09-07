@@ -25,8 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 	
 		
-	<select id="queryStudentBystuageOrstuName" 	parameterType="student"	resultType="student" > 
-		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '%${stuName}%' 
+	<select id="queryStudentBystuageOrstuName" 	parameterType="student"	resultType="student" >
+		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '${stuName}'
+<!-- 		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '%${stuName}%' -->
 	</select>
 	
 	<!-- 
@@ -34,9 +35,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		select stuno,stuname,stuage  from student where homeaddress = #{homeAddress}  or schooladdress = '${schoolAddress}'
 	</select>
 	 -->
-	<!-- 输入参数为 级联属性 -->
+	<!-- 输入参数为 级联属性("属性的属性") -->
 	<select id="queryStudentByaddress" 	parameterType="student"	resultType="student" > 
-		select stuno,stuname,stuage  from student where homeaddress = #{address.homeAddress}  or schooladdress = '${address.schoolAddress}'
+		select stuno,stuname,stuage from student where homeaddress = #{address.homeAddress}  or schooladdress = '${address.schoolAddress}'
 	</select>
 	
 	<resultMap type="student" id="studentMapping">

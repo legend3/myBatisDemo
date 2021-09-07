@@ -9,15 +9,6 @@ public class Student {
 	
 	private Address address;//家庭、学校
 	
-	
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
 	public Student(int stuNo, String stuName, int stuAge, String graName) {
 		this.stuNo = stuNo;
 		this.stuName = stuName;
@@ -33,16 +24,17 @@ public class Student {
 		this.stuSex = stuSex;
 	}
 
-
-
-
+	public Student(int stuNo, String stuName, int stuAge, String graName, boolean stuSex, Address address) {
+		this.stuNo = stuNo;
+		this.stuName = stuName;
+		this.stuAge = stuAge;
+		this.graName = graName;
+		this.stuSex = stuSex;
+		this.address = address;
+	}
 
 	public Student() {
 	}
-	
-
-
-
 
 	public int getStuNo() {
 		return stuNo;
@@ -56,19 +48,13 @@ public class Student {
 		this.stuNo = stuNo;
 	}
 
-
-
-
-
 	public boolean isStuSex() {
 		return stuSex;
 	}
 
-
 	public void setStuSex(boolean stuSex) {
 		this.stuSex = stuSex;
 	}
-
 
 	public String getStuName() {
 		return stuName;
@@ -89,11 +75,18 @@ public class Student {
 	}
 	public void setGraName(String graName) {
 		this.graName = graName;
-	} 
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 	
 	@Override
 	public String toString() {
-		return stuNo+"-"+this.stuName+"-"+this.stuAge+"-"+this.graName +"-性别:"+this.stuSex ;
+		return stuNo+"-"+this.stuName+"-"+this.stuAge+"-"+this.graName +"-性别:"+this.stuSex;
 	}
-	
 }
