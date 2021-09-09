@@ -41,5 +41,8 @@ public interface StudentMapper {
 		
 		Student queryStudentByStunoWithConverter(int stuno);
 
-
+		//调用存储过程
+		void queryCountByGradeWithProcedure(Map<String,Object> params);
+		//删除存储过程
+		void deleteStuBynoWithProcedure(Map<String,Object> params);
 }

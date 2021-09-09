@@ -285,7 +285,51 @@ public class test {
         System.out.println("修改成功");
         session.close();
     }
+    @Test
+    //调用存储过程
+    public void queryCountByGradeWithProcedure() throws IOException {
+        //Connection -  SqlSession操作MyBatis
+        //conf.xml - > reader
+        Reader reader = Resources.getResourceAsReader("conf.xml") ;
+        //reader  ->SqlSession
+        //可以通过build的第二参数 指定数据库环境
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
+        SqlSession session = sessionFacotry.openSession() ;
 
+//					String statement = "org.lanqiao.entity.studentMapper."+"updateStudentByStuno";
+
+        StudentMapper studentMapper = session.getMapper(StudentMapper.class);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("gName", "s1");
+        studentMapper.queryCountByGradeWithProcedure(params);
+
+        //获取存储过程的输出参数
+        Object count = params.get("scount");
+
+        System.out.println(count);
+        session.close();
+    }
+    @Test
+    //删除存储过程
+    public void deleteStuBynoWithProcedure() throws IOException {
+        //Connection -  SqlSession操作MyBatis
+        //conf.xml - > reader
+        Reader reader = Resources.getResourceAsReader("conf.xml") ;
+        //reader  ->SqlSession
+        //可以通过build的第二参数 指定数据库环境
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
+        SqlSession session = sessionFacotry.openSession() ;
+
+        StudentMapper studentMapper = session.getMapper(StudentMapper.class);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("sno", 3);
+        studentMapper.deleteStuBynoWithProcedure(params);
+
+        session.commit(); //提交事务
+
+        System.out.println("删除存储过程完毕！");
+        session.close();
+    }
 //    public static void main(String[] args) throws IOException {
 //		queryStudentByStunoWithConverter();
 //		queryStudentByStuno();
