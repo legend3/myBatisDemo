@@ -3,6 +3,7 @@ package org.legend.mybatis.mapper;
 import org.legend.mybatis.entity.Student;
 
 import java.util.List;
+import java.util.Map;
 
 //操作Mybatis的接口
 public interface StudentMapper {
@@ -22,6 +23,8 @@ public interface StudentMapper {
 		List<Student> queryStudentOrderByColumn(String column);
 		
 		List<Student> queryStudentBystuageOrstuName(Student student);
+		//输入对象为HashMap方式：
+		List<Student> queryStudentBystuageOrstuNameWithHashMap(Map<String, Object> params);
 		
 //		List<Student>  queryStudentByaddress(Address address);
 		List<Student>  queryStudentByaddress(Student address);
@@ -37,5 +40,6 @@ public interface StudentMapper {
 		
 		
 		Student queryStudentByStunoWithConverter(int stuno);
-		
+
+
 }

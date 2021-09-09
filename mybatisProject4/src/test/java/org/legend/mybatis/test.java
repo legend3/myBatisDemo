@@ -2,7 +2,9 @@ package org.legend.mybatis;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -127,6 +129,28 @@ public class test {
 //        student.setStuName("m");
         //[2-ls-24-null-性别:false, 3-mike-23-null-性别:false]
         List<Student> students = studentMapper.queryStudentBystuageOrstuName(student) ;//接口的方法->SQL
+
+        System.out.println(students);
+        session.close();
+    }
+    @Test
+    //根据姓名或年龄查询学生(输入参数类型为对象类型时，#$值的案例！)
+    public void queryStudentBystuageOrstuNameWithHashMap() throws IOException {
+        //Connection -  SqlSession操作MyBatis
+        //conf.xml - > reader
+        Reader reader = Resources.getResourceAsReader("conf.xml") ;
+        //reader  ->SqlSession
+        //可以通过build的第二参数 指定数据库环境
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
+        SqlSession session = sessionFacotry.openSession() ;
+
+
+        StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
+        Map<String, Object> studentMap = new HashMap<>();
+        studentMap.put("stuAge", 23);//key:输入参数名，value:赋值输入参数
+        studentMap.put("stuName", "mike");//key:输入参数名，value:赋值输入参数
+
+        List<Student> students = studentMapper.queryStudentBystuageOrstuNameWithHashMap(studentMap) ;//接口的方法->SQL
 
         System.out.println(students);
         session.close();
@@ -262,7 +286,7 @@ public class test {
         session.close();
     }
 
-    public static void main(String[] args) throws IOException {
+//    public static void main(String[] args) throws IOException {
 //		queryStudentByStunoWithConverter();
 //		queryStudentByStuno();
 //		queryStudentByStuname();
@@ -275,5 +299,5 @@ public class test {
 //		delteStudentByStuno();
 //		updateStudentByStuno();
 //		queryAllStudents();
-    }
+//    }
 }

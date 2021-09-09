@@ -29,6 +29,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '${stuName}'
 <!-- 		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '%${stuName}%' -->
 	</select>
+
+	<select id="queryStudentBystuageOrstuNameWithHashMap" 	parameterType="hashmap"	resultType="student" >
+		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '${stuName}'
+		<!-- 		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '%${stuName}%' -->
+	</select>
 	
 	<!-- 
 	<select id="queryStudentByaddress" 	parameterType="address"	resultType="student" > 
@@ -95,6 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	<select id="queryAllStudents"  resultType="sTuDenT" >
 		select * from student 
 	</select>
+
 
 	
 	
