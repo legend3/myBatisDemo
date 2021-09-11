@@ -24,7 +24,7 @@
 
 以上，可以通过接口的方法->SQL语句
 -->
-<mapper namespace="org.legend.mybatis.mapper.StudentMapper">
+<mapper namespace="org.legend.StudentMapper">
 
     <!--  后续通过  namespace.id-->
     <!-- mybatisproject2:
@@ -44,7 +44,7 @@
                   如果是对象类型，则必须是对象的属性 #{属性名}
 
                输出参数：  如果返回值类型是一个 对象（如Student），则无论返回一个、还是多个，
-                            在resultType都写成org.legend.mybatis.entity.Student
+                            在resultType都写成org.legend.Student
                                 即 resultType="Student"
             -->
         select stuNo,stuName from student where stuNo = #{stuNo}

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
     <properties  resource="db.properties"/>
-
     <!-- 
     <settings>
             <setting name="cacheEnabled" value="false"  />
@@ -17,11 +15,6 @@
         <!--  批量定义别名  （别名 忽略大小写），以下会自动将该包中的所有类 批量定义别名： 别名就是类名（不带包名，忽略大小写）   -->
         <package name="org.legend.mybatis.entity"/>
     </typeAliases>
-
-
-    <typeHandlers>
-        <typeHandler handler="org.legend.BooleanAndIntConverter" javaType="Boolean" jdbcType="INTEGER" />
-    </typeHandlers>
 
     <!-- 通过environments的default值 和  environment的 id 来指定 MyBatis运行时的数据库环境-->
     <environments default="development">
@@ -40,9 +33,7 @@
                     POOLED：使用数据库连接池
                     JNDI：从tomcat中获取一个内置的数据库连接池 （数据库连接池-数据源  ）
              -->
-
             <dataSource type="POOLED">
-
 
                 <!-- 配置数据库信息 -->
                 <property name="driver" value="${driver}"/>
@@ -52,30 +43,6 @@
             </dataSource>
         </environment>
 
-        <!-- 真正的项目应该在   发布的那台计算机上运行 -->
-        <environment id="shishi">
-            <transactionManager type="JDBC"/>
-            <dataSource type="POOLED">
-                <!-- 配置数据库信息 -->
-                <property name="driver" value="oracle.jdbc.OracleDriver"/>
-                <property name="url" value="jdbc:oracle:thin:@192.168.1.183:1521:ORCL"/>
-                <property name="username" value="scott"/>
-                <property name="password" value="tiger"/>
-            </dataSource>
-        </environment>
-
-
-        <!--  -->
-        <environment id="test">
-            <transactionManager type="JDBC"/>
-            <dataSource type="POOLED">
-                <!-- 配置数据库信息 -->
-                <property name="driver" value="oracle.jdbc.OracleDriver"/>
-                <property name="url" value="jdbc:oracle:thin:@192.168.1.111:1521:ORCL"/>
-                <property name="username" value="scott"/>
-                <property name="password" value="tiger"/>
-            </dataSource>
-        </environment>
     </environments>
 
     <mappers>

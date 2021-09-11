@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:该mapper.xml映射文件的 唯一标识 -->
+<mapper namespace="org.legend.StudentMapper">
+	<!-- 通过调用[存储过程] 实现查询 ,statementType="CALLABLE"
+            存储过程的输入参数，在mybatis用Map来传递（HashMap）
+        -->
+	<select id="queryCountByGradeWithProcedure" statementType="CALLABLE"  parameterType="HashMap" >
+		{
+			CALL queryCountByGradeWithProcedure(
+				#{gName,jdbcType=VARCHAR,mode=IN},
+				#{scount,jdbcType=INTEGER,mode=OUT}
+			)
+			}
+	</select>
+
+	<!-- 通过存储过程实现删除 -->
+	<delete id="deleteStuBynoWithProcedure" statementType="CALLABLE" parameterType="HashMap">
+		{
+			CALL deleteStuBynoWithProcedure(
+				#{sno,jdbcType=INTEGER,mode=IN}
+			)
+			}
+	</delete>
+</mapper>

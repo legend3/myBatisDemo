@@ -1,45 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
-  <groupId>org.legend.mybatis</groupId>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>mybatisProject3</artifactId>
   <version>1.0</version>
+  <modelVersion>4.0.0</modelVersion>
 
-  <name>mybatisProject3</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
   </properties>
 
+  <parent>
+    <artifactId>myBatisDemo</artifactId>
+    <groupId>org.legend.mybatis</groupId>
+    <relativePath>../pom.xml</relativePath>
+    <version>1.0</version>
+  </parent>
   <dependencies>
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>7.4.0</version>
-      <!--  作用域：只能在test目录    -->
-      <!--      <scope>test</scope>-->
     </dependency>
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis</artifactId>
-      <version>3.5.7</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.24</version>
     </dependency>
   </dependencies>
-
   <build>
-    <!--  在pom文件 标明xml的位置  -->
+    <!--  在pom文件 标明xml的位置   用于config。xml的定位Mapper映射文件-->
     <resources>
       <resource>
         <directory>src/main/java</directory>
@@ -50,4 +44,6 @@
       </resource>
     </resources>
   </build>
+
+
 </project>

@@ -10,11 +10,36 @@
     <version>1.0</version>
     <modules>
         <module>mybatisProject4</module>
+        <module>mybatisProject5</module>
+        <module>mybatisProject6</module>
     </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>7.4.0</version>
+                <!--  作用域：只能在test目录    -->
+                <!--      <scope>test</scope>-->
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>3.5.7</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.24</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
 </project>

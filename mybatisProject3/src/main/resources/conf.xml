@@ -18,7 +18,7 @@
     <!-- 设置单个/多个别名 -->
     <typeAliases>
         <!-- 单个别名 （别名 忽略大小写） -->
-<!--         <typeAlias type="org.legend.mybatis.entity.Student" alias="student"/>-->
+<!--         <typeAlias type="org.legend.Student" alias="student"/>-->
         <!--  批量定义别名  （别名 忽略大小写），以下会自动将该包中的所有类 批量定义别名： 别名就是类名（不带包名，忽略大小写）   -->
         <package name="org.legend.mybatis.entity"/>
     </typeAliases>
