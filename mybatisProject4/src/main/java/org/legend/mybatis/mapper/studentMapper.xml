@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace:该mapper.xml映射文件的 唯一标识 -->
-<mapper namespace="org.legend.StudentMapper">
+<mapper namespace="org.legend.mybatis.mapper.StudentMapper">
 	<!--  后续通过  namespace.id-->
 	<!--parameterType:输入参数的类型
 	resultType：查询返回结果值的类型  ，返回类型  -->
@@ -56,9 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	
 	</resultMap>
 	
-	
-	 
-	
+
 	<!-- 查询：使用了类型转换器
 	1如果 类中属性 和表中的字段 类型能够合理识别 （String-varchar2），则可以使用resultType;否则(boolean-number) 使用resultMap
 	2如果 类中属性名 和表中的字段名能够合理识别 （stuNo -stuno）则可以使用resultType;否则(id-stuno) 使用resultMap

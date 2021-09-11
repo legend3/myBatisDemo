@@ -3,123 +3,53 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace:该mapper.xml映射文件的 唯一标识 -->
-<mapper namespace="org.legend.StudentMapper">
-	<!--  后续通过  namespace.id-->
-	<!--parameterType:输入参数的类型
-	resultType：查询返回结果值的类型  ，返回类型  -->
-
-
-	<!--
-		1.通过接口方法传值给#{}、${}}
-		 -->
-	<select id="queryStudentByStuno" 	parameterType="int"  	resultMap="studentMapping" >
-		select * from student where stuno = ${stuNo}
+<mapper namespace="org.legend.mybatis.mapper.StudentMapper">
+	<!--	1.简单类型（8个基本+String）	-->
+	<select id="queryStudentCount" resultType="int">
+		select count(*) from student
 	</select>
-	
-	<select id="queryStudentByStuname" 	parameterType="string"  	resultType="student" >
-		select stuno,stuname,stuage  from student where stuname = '${value}'
+	<!--	2.输出参数为实体对象类型		-->
+	<select id="queryStuByStuno" 	parameterType="int"  resultType="student" >
+		select * from student where stuno = ${value}
 	</select>
-	
-	<select id="queryStudentOrderByColumn" 	parameterType="string"	resultType="student" >
-		select stuno,stuname,stuage  from student  order by ${value} asc
+	<!--	3.输出参数为实体对象类型的集合 ：虽然输出类型为集合，但是resultType依然写 集合的元素类型（resyltType="Student"）	-->
+	<select id="queryStudentByhomeaddress" parameterType="student" resultType="student">
+		select stuNo,stuName from student where homeaddress=#{address.homeaddress}
 	</select>
-	
-		
-	<select id="queryStudentBystuageOrstuName" 	parameterType="student"	resultType="student" >
-		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '${stuName}'
-<!-- 		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '%${stuName}%' -->
+	<!--	4.输出参数类型为HashMap:(返回Map类型)
+			4.1 别名("no"、"name")作为Map的key
+			4.2
+				id: 数据库字段 "stuNo": 类属性名
+				stuName: 数据库字段 "stuName": 类属性名
+	-->
+	<!-- 4.1 一个HashMap 对应一个学生的多个元素（多个属性）  【一个map，一个学生】   -->
+	<select id="queryStudentOutByHashMap"  resultType="HashMap" >
+		select stuno "no",stuname "name" from student where stuno=1
 	</select>
 
-	<select id="queryStudentBystuageOrstuNameWithHashMap" 	parameterType="hashmap"	resultType="student" >
-		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '${stuName}'
-		<!-- 		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '%${stuName}%' -->
+	<!--	4.2 多个学生就多个hashmap,	resultType填写二维数组元素类型	-->
+	<select id="queryAllStudentsOutByHashMap"  resultType="HashMap" >
+		select stuno "no",stuname "name" from student
 	</select>
-	
-	<!-- 
-	<select id="queryStudentByaddress" 	parameterType="address"	resultType="student" > 
-		select stuno,stuname,stuage  from student where homeaddress = #{homeAddress}  or schooladdress = '${schoolAddress}'
+
+	<!--	4.3 输入参数:resultMap形式
+				临时改一下列名:
+							alter table student change column stuno id int(11);
+							alter table student change column stuname name int(11);
+		-->
+	<select id="queryStudentById" 	 parameterType="int"	resultMap="queryStudentByIdMap" >
+		select id,name from student where id = #{id}
 	</select>
-	 -->
-	<!-- 输入参数为 级联属性("属性的属性") -->
-	<select id="queryStudentByaddress" 	parameterType="student"	resultType="student" > 
-		select stuno,stuname,stuage from student where homeaddress = #{address.homeAddress}  or schooladdress = '${address.schoolAddress}'
-	</select>
-	
-	<resultMap type="student" id="studentMapping">
-			<!-- 分为主键id 和非主键 result-->
-			<id property="stuNo"  column="stuno"  />
-			<result property="stuName"  column="stuname" />
-			<result property="stuAge"  column="stuage" />
-			<result property="graName"  column="graname" />
-			<result property="stuSex"  column="stusex"  javaType="boolean" jdbcType="INTEGER"/>
-	
-	
+	<resultMap type="student" id="queryStudentByIdMap">
+		<!-- 指定类中的属性 和 表中的字段 对应关系 -->
+		<id property="stuNo"  column="id" />
+		<result property="stuName" column="name" />
 	</resultMap>
-	
-	
-	 
-	
-	<!-- 查询：使用了类型转换器
-	1如果 类中属性 和表中的字段 类型能够合理识别 （String-varchar2），则可以使用resultType;否则(boolean-number) 使用resultMap
-	2如果 类中属性名 和表中的字段名能够合理识别 （stuNo -stuno）则可以使用resultType;否则(id-stuno) 使用resultMap
-	 -->
-	<select id="queryStudentByStunoWithConverter" 	parameterType="int"  	
-	resultMap="studentResult" >
-		select * from student where stuno = #{stuno}
+<!--	4.4 输出参数:resultType+hashmap形式
+			数据库字段名找不到对应的属性名，不会报错而是给个默认值(0、null等)
+			所以，如果10个字段，但发现 某一个字段结果始终为默认值（0，0.0，null），则可能是 表的字段  和 类的属性名字写错
+	-->
+	<select id="queryStudentByIdWithHashMap" 	 parameterType="int"	resultType="student" >
+		select id "stuNo",name "stuName" from student where id = #{id}
 	</select>
-	
-	<resultMap type="student" id="studentResult">
-			<!-- 分为主键id 和非主键 result-->
-			<id property="stuNo"  column="stuno"  />
-			<result property="stuName"  column="stuname" />
-			<result property="stuAge"  column="stuage" />
-			<result property="graName"  column="graname" />
-			<result property="stuSex"  column="stusex"  javaType="boolean" jdbcType="INTEGER"/>
-	</resultMap>
-	
-	
-	<!-- 带转换器的增加 -->
-	<insert id="addStudentWithConverter" parameterType="student" >
-		insert into student(stuno,stuname,stuage,graname,stusex) values(#{stuNo},#{stuName},#{stuAge},#{graName} ,#{stuSex ,javaType=boolean  ,jdbcType=INTEGER   } ) 
-	</insert>
-	
-	
-	<insert id="addStudent" parameterType="student" >
-		insert into student(stuno,stuname,stuage,graname) values(#{stuNo},#{stuName},#{stuAge},#{graName}  ) 
-	</insert>
-	
-	
-	<delete id="deleteStudentByStuno"  parameterType="int">
-		delete from student where stuno = #{stuno} 
-	</delete>
-	
-	<update id="updateStudentByStuno" parameterType="student" >
-		update student set stuname=#{stuName} ,stuage=#{stuAge},graname=#{graName} where stuno=#{stuNo} 
-	</update>
-	
-	<select id="queryAllStudents"  resultType="sTuDenT" >
-		select * from student 
-	</select>
-
-
-	<!-- 通过调用[存储过程] 实现查询 ,statementType="CALLABLE"
-            存储过程的输入参数，在mybatis用Map来传递（HashMap）
-        -->
-	<select id="queryCountByGradeWithProcedure" statementType="CALLABLE"  parameterType="HashMap" >
-		{
-			CALL queryCountByGradeWithProcedure(
-				#{gName,jdbcType=VARCHAR,mode=IN},
-				#{scount,jdbcType=INTEGER,mode=OUT}
-			)
-			}
-	</select>
-
-	<!-- 通过存储过程实现删除 -->
-	<delete id="deleteStuBynoWithProcedure" statementType="CALLABLE" parameterType="HashMap">
-		{
-			CALL deleteStuBynoWithProcedure(
-				#{sno,jdbcType=INTEGER,mode=IN}
-			)
-			}
-	</delete>
 </mapper>

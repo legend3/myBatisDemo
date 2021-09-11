@@ -40,10 +40,6 @@ public class Student {
 		return stuNo;
 	}
 
-
-
-
-
 	public void setStuNo(int stuNo) {
 		this.stuNo = stuNo;
 	}
