@@ -92,6 +92,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		<!--	异处映射文件中引用方式:namespace.sqlId	-->
 		<include refid="org.legend.mybatis.mapper.StudentMapper.objectArrayStuNos"></include>
 	</select>
+
+
 	<!--	SQL片段	-->
 	<sql id="objectArrayStuNos" >
 		<where>

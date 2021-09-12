@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:该mapper.xml映射文件的 唯一标识 -->
+<mapper namespace="org.legend.mybatis.mapper.StudentMapper">
+	<!--	一对一
+				业务扩展类: 创建一个包含两表属性的总类，studentbusiness
+		-->
+	<select id="queryStudentByNoWithOO" parameterType="int" resultType="studentbusiness">
+		select s.*, c.* from student s
+		inner join studentcard c on s.cardid = c.cardid
+		where s.stuno = #{stuNo}
+	</select>
+	<!--	一对一
+				resultMap: 两张表创建两个类分别各包含两表字段，
+				再把一个类作为另一个类的属性
+		-->
+	<select id="queryStudentByNoWithOOResultMap" parameterType="int" resultMap="student_cardid_studentcard">
+		select s.*, c.* from student s
+		inner join studentcard c
+		    on s.cardid = c.cardid
+		where s.stuno = #{stuNo}
+	</select>
+	<resultMap id="student_cardid_studentcard" type="student">
+		<result column="stuno" property="stuNo"/>
+		<result column="stuname" property="stuName"/>
+		<result column="stuage" property="stuAge"/>
+		<!--	一对一时，对象成员使用association映射;javaType指定该属性的类型	-->
+		<association property="studentCard" javaType="StudentCard">
+			<id property="cardId" column="cardid"/>
+			<result property="cardInfo" column="cardinfo"/>
+		</association>
+	</resultMap>
+
+	<select id="quearyClassAndStudents" parameterType="int" resultMap="class_student_map">
+		select c.*, s.* from student s
+		inner join studentclass c
+			 on c.classid = s.classid
+		where c.classid = #{classid}
+	</select>
+	<!--	类与表的对应关系	-->
+	<resultMap id="class_student_map" type="studentClass">
+		<!--	因为type的类是studentClass因此先配置studentClass属性	-->
+		<id column="classid" property="classId"/>
+		<result column="classname" property="className"/>
+		<!--	配置成员属性students 一对多时用collection;
+				属性类型：javaType，
+				属性的元素类型：ofType。
+			-->
+		<collection property="students" ofType="student">
+			<id column="stuno" property="stuNo"/>
+			<result column="stuname" property="stuName"/>
+			<result column="stuAge" property="stuAge"/>
+			<!--	可以继续配置对象成员属性，用association/collection	-->
+			<association property="studentCard" javaType="StudentCard">
+				<id column="cardid" property="cardId"/>
+				<result column="cardinfo" property="cardInfo"/>
+			</association>
+		</collection>
+	</resultMap>
+</mapper>

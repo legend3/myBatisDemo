@@ -10,7 +10,9 @@
         <module name="mybatisProject5" />
         <module name="mybatisProject2" />
         <module name="mybatisProject3" />
+        <module name="mybatisProject8" />
         <module name="mybatisProject" />
+        <module name="mybatisProject9" />
         <module name="mybatisProject6" />
         <module name="mybatisProject7" />
       </profile>
