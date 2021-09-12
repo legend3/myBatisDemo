@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:该mapper.xml映射文件的 唯一标识 -->
+<mapper namespace="org.legend.mybatis.mapper.StudentMapper">
+	<select id="queryStuByNOrAWithSqlTag" parameterType="student" resultType="student">
+# 		select stuname,stuage,stuno from student where 1=1
+		select stuname,stuage,stuno from student
+		<!-- <if>
+		 	1.属性名大小写一致
+		 	2.判断stuName属性值不为null不为空字符
+		 	3.'':	外层双引号，内层单引号
+		 	4.<where>会自动处理第一个标签中的 and，但不会处理之后中的and。假如student类没有stuage属性，就会自动处理stuname的 and。
+		 -->
+	<where>
+		<if test="stuName != null and stuName != '' ">
+			and stuname = #{stuName}
+		</if>
+
+		<if test="stuAge != null and stuAge != '' ">
+			and stuage = #{stuAge}
+		</if>
+	</where>
+	</select>
+		<!--
+			<foreach>
+					迭代：类属性
+			-->
+	<select id="queryStudentsWithNosInGrade" parameterType="grade" resultType="student">
+		select * from student
+		<where>
+			<if test="stuNos !=null and stuNos.size > 0">
+				<foreach collection="stuNos" open=" and stuno in ("  item="stuNo" separator="," close=")">
+					#{stuNo}<!--item的变量指定，在方法体中用！ -->
+				</foreach>
+			</if>
+		</where>
+	</select>
+	<!--
+                <foreach>
+                        迭代：数组
+                        案例：将多个元素值 放入数组中int[] stuNos = {1,2,3}
+                        约定：无论编写代码时，传递的是什么参数名(stuNos)，在mapper.xml中 必须用array代替该数组
+                -->
+	<select id="queryStudentsWithArray" parameterType="int[]" resultType="student">
+		select * from student
+		<where>
+			<if test="array !=null and array.length > 0">
+				<foreach collection="array" open=" and stuno in ("  item="stuNo" separator="," close=")">
+					#{stuNo}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	<!--
+                <foreach>
+                        迭代：集合
+                        案例：将多个元素值 放入集合中List<Integer> stuNos = new ArrayList<>();
+							stuNos.add(1);
+							stuNos.add(2);
+							stuNos.add(3);
+                        约定：无论编写代码时，传递的是什么参数名(stuNos)，在mapper.xml中 必须用list代替该集合
+                -->
+	<select id="queryStudentsWithList" parameterType="list" resultType="student">
+		select * from student
+		<where>
+			<if test="list !=null and list.size > 0">
+				<foreach collection="list" open=" and stuno in ("  item="stuNo" separator="," close=")">
+					#{stuNo}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	<!--
+                <foreach>
+                        迭代：对象数组
+                        案例：将多个元素值 放入集合中Student[] stuNos = {student0,student1,student2}
+                        约定：无论编写代码时，传递的是什么参数名(stuNos)，在mapper.xml中 必须用list代替该集合
+                -->
+	<select id="queryStudentsWithObjectArray" parameterType="object[]" resultType="student">
+		select * from student
+<!--		<where>-->
+<!--			<if test="array !=null and array.length > 0">-->
+<!--				<foreach collection="array" open=" and stuno in ("  item="student" separator="," close=")">-->
+<!--					#{student.stuNo}-->
+<!--				</foreach>-->
+<!--			</if>-->
+<!--		</where>-->
+			<!--	本映射文件中引用方式	-->
+			<!--<include refid="objectArrayStuNos"></include>-->
+		<!--	异处映射文件中引用方式:namespace.sqlId	-->
+		<include refid="org.legend.mybatis.mapper.StudentMapper.objectArrayStuNos"></include>
+	</select>
+	<!--	SQL片段	-->
+	<sql id="objectArrayStuNos" >
+		<where>
+			<if test="array !=null and array.length > 0">
+				<foreach collection="array" open=" and stuno in ("  item="student" separator="," close=")">
+					#{student.stuNo}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+</mapper>

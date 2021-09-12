@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 	<!--	3.输出参数为实体对象类型的集合 ：虽然输出类型为集合，但是resultType依然写 集合的元素类型（resyltType="Student"）	-->
 	<select id="queryStudentByhomeaddress" parameterType="student" resultType="student">
-		select stuNo,stuName from student where homeaddress=#{address.homeaddress}
+		select stuNo,stuName from student where homeaddress=#{address.homeAddress}
 	</select>
 	<!--	4.输出参数类型为HashMap:(返回Map类型)
 			4.1 别名("no"、"name")作为Map的key
