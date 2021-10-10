@@ -48,13 +48,13 @@ public class test {
         SqlSession session = sessionFacotry.openSession() ;
 
         StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;
-        Student student = studentMapper.queryStudentByStuno(2) ;//接口中的方法->SQL语句
+        Student student = studentMapper.queryStudentByStuno(1) ;//接口中的方法->SQL语句
 
         System.out.println(student);
         session.close();
     }
     @Test
-    //查询单个学生byName(#{}、${}的区别:b)
+    //查询单个学生byName(#{任意值})
     public void queryStudentByStuname() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
@@ -72,7 +72,7 @@ public class test {
         session.close();
     }
     @Test
-    //查询全部学生
+    //查询全部学生(${value} ，其中的标识符只能是value)
     public void queryAllStudents() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
@@ -102,7 +102,7 @@ public class test {
         SqlSession session = sessionFacotry.openSession() ;
 
 
-        StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
+        StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;
         List<Student> students = studentMapper.queryStudentOrderByColumn("stuno") ;//接口的方法->SQL
 
         System.out.println(students);
@@ -120,13 +120,13 @@ public class test {
         SqlSession session = sessionFacotry.openSession() ;
 
 
-        StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
+        StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;
         Student student = new Student();
         student.setStuAge(24);
 //        模糊查询，方式一：
-        student.setStuName("%m%");
+//        student.setStuName("%j%");
 //        模糊查询，方式二：
-//        student.setStuName("m");
+        student.setStuName("j");
         //[2-ls-24-null-性别:false, 3-mike-23-null-性别:false]
         List<Student> students = studentMapper.queryStudentBystuageOrstuName(student) ;//接口的方法->SQL
 
@@ -148,7 +148,7 @@ public class test {
         StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
         Map<String, Object> studentMap = new HashMap<>();
         studentMap.put("stuAge", 23);//key:输入参数名，value:赋值输入参数
-        studentMap.put("stuName", "mike");//key:输入参数名，value:赋值输入参数
+        studentMap.put("stuName", "jack");//key:输入参数名，value:赋值输入参数
 
         List<Student> students = studentMapper.queryStudentBystuageOrstuNameWithHashMap(studentMap) ;//接口的方法->SQL
 

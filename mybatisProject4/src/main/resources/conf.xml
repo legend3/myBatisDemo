@@ -18,9 +18,9 @@
         <package name="org.legend.mybatis.entity"/>
     </typeAliases>
 
-
     <typeHandlers>
-        <typeHandler handler="org.legend.mybatis.converter.BooleanAndIntConverter" javaType="Boolean" jdbcType="INTEGER" />
+        <typeHandler handler="org.legend.mybatis.converter.BooleanAndIntConverter"
+                     javaType="Boolean" jdbcType="INTEGER" />
     </typeHandlers>
 
     <!-- 通过environments的default值 和  environment的 id 来指定 MyBatis运行时的数据库环境-->

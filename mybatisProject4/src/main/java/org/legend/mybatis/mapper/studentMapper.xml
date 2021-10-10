@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace:该mapper.xml映射文件的 唯一标识 -->
-<mapper namespace="org.legend.StudentMapper">
+<mapper namespace="org.legend.mybatis.mapper.StudentMapper">
 	<!--  后续通过  namespace.id-->
 	<!--parameterType:输入参数的类型
 	resultType：查询返回结果值的类型  ，返回类型  -->
@@ -13,21 +13,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		1.通过接口方法传值给#{}、${}}
 		 -->
 	<select id="queryStudentByStuno" 	parameterType="int"  	resultMap="studentMapping" >
-		select * from student where stuno = ${stuNo}
+		select * from student where stuno = ${xxx}
 	</select>
 	
 	<select id="queryStudentByStuname" 	parameterType="string"  	resultType="student" >
 		select stuno,stuname,stuage  from student where stuname = '${value}'
 	</select>
-	
+
 	<select id="queryStudentOrderByColumn" 	parameterType="string"	resultType="student" >
 		select stuno,stuname,stuage  from student  order by ${value} asc
 	</select>
-	
-		
+
 	<select id="queryStudentBystuageOrstuName" 	parameterType="student"	resultType="student" >
-		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '${stuName}'
-<!-- 		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '%${stuName}%' -->
+<!-- 模拟查询方式一： -->
+		<!-- select stuno,stuname,stuage  from student where stuage= #{stuAge} or stuname like '${stuName}' -->
+<!-- 模拟查询方式二：-->
+select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '%${stuName}%'
 	</select>
 
 	<select id="queryStudentBystuageOrstuNameWithHashMap" 	parameterType="hashmap"	resultType="student" >
