@@ -12,12 +12,16 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
+
+<!-- 加入父工程的坐标gav -->
   <parent>
     <artifactId>myBatisDemo</artifactId>
     <groupId>org.legend.mybatis</groupId>
     <relativePath>../pom.xml</relativePath>
     <version>1.0</version>
   </parent>
+
+<!--  继承父类哪些依赖包(其实也有方便管理依赖的作用！)-->
   <dependencies>
     <dependency>
       <groupId>org.testng</groupId>
@@ -33,7 +37,8 @@
     </dependency>
   </dependencies>
   <build>
-    <!--  在pom文件 标明xml的位置   用于config。xml的定位Mapper映射文件-->
+
+    <!--  在pom文件标明xml的位置,用于config.xml的定位Mapper映射文件-->
     <resources>
       <resource>
         <directory>src/main/java</directory>
@@ -43,6 +48,7 @@
         <filtering>true</filtering>
       </resource>
     </resources>
+<!-- 指定JDK版本 -->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -55,6 +61,4 @@
       </plugin>
     </plugins>
   </build>
-
-
 </project>

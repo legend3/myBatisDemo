@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- namespace:该mapper.xml映射文件的 唯一标识 -->
+<!-- namespace:该mapper.xml映射文件的 唯一标识
+     补充:第三种：namespace绑定的是mapper接口对应的sql.xml文件是，其也是有代理模式自动实现数据持久化。
+		但mapper接口对应的sql.xml文件名必须保持一致才能自动实现数据持久化。
+			<mapper namespace="com.system.sql.LiveInfoMapper"></namespace>
+     -->
 <mapper namespace="studentMapper">
 
     <!--  后续通过  namespace.id-->
     <!--
         parameterType:输入参数(stuNo)的类型
-        resultType：查询返回结果值的类型  ，返回类型  -->
-    <select id="queryStudentByStuno" parameterType="int" resultType="org.legend.Student">
+        resultType：查询返回结果值的类型，返回类型  -->
+    <select id="queryStudentByStuno" parameterType="int" resultType="org.legend.mybatis.entity.Student">
         <!--
-               输入参数parameterType 和 输出参数resultType ，在形式上都只能有一个;     -如果比如输入参数涉及多个,用集合,对象.
+               输入参数parameterType 和 输出参数resultType ，在形式上都只能有一个;     -如果比如输入参数涉及多个,则用集合,对象.
                如果输入参数 ：是简单类型（8个基本类型+String） 是可以使用任何占位符,#{xxxx}
                   如果是对象类型，则必须是对象的属性 #{属性名}
 
@@ -18,11 +22,10 @@
                             在resultType都写成org.legend.entity.Student
                                 即 resultType="Student"
             -->
-        select stuNo,stuName from student where stuNo = #{stuNo}
+        select stuNo,stuName from student where stuNo = #{xxx}
     </select>
 
-
-    <insert id="addStudent" parameterType="org.legend.Student" >
+    <insert id="addStudent" parameterType="org.legend.mybatis.entity.Student" >
         insert into student(stuno,stuname,stuage,graname) values(#{stuNo},#{stuName},#{stuAge},#{graName}  )
     </insert>
 
@@ -30,11 +33,11 @@
         delete from student where stuno = #{stuno}
     </delete>
 
-    <update id="updateStudentByStuno" parameterType="org.legend.Student" >
+    <update id="updateStudentByStuno" parameterType="org.legend.mybatis.entity.Student" >
         update student set stuname=#{stuName} ,stuage=#{stuAge},graname=#{graName} where stuno=#{stuNo}
     </update>
 
-    <select id="queryAllStudents"  resultType="org.legend.Student" >
+    <select id="queryAllStudents"  resultType="org.legend.mybatis.entity.Student" >
         select * from student
     </select>
 </mapper>

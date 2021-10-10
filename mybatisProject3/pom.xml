@@ -11,6 +11,7 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
+
   <parent>
     <artifactId>myBatisDemo</artifactId>
     <groupId>org.legend.mybatis</groupId>
@@ -31,8 +32,9 @@
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
   </dependencies>
+
   <build>
-    <!--  在pom文件 标明xml的位置   用于config。xml的定位Mapper映射文件-->
+    <!--  在pom文件标明mapper.xml的位置,用于config.xml的定位Mapper映射文件-->
     <resources>
       <resource>
         <directory>src/main/java</directory>
@@ -42,6 +44,7 @@
         <filtering>true</filtering>
       </resource>
     </resources>
+<!--    JDK版本指定-->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

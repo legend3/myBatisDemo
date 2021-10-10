@@ -32,18 +32,17 @@ public class test {
     public void queryAllStudents() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
-        Reader reader = Resources.getResourceAsReader("conf.xml") ;
+        Reader reader = Resources.getResourceAsReader("conf.xml");
         //reader  ->SqlSession
         //可以通过build的第二参数 指定数据库环境
         SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
         SqlSession session = sessionFacotry.openSession() ;
 
         String statement = "studentMapper."+"queryAllStudents";
-        List<Student> students = session.selectList(statement) ;
+        List<Student> students = session.selectList(statement);
         System.out.println(students);
         session.close();
     }
-
     @Test
     //增加学生
     public void addStudent() throws IOException {
@@ -56,7 +55,7 @@ public class test {
         SqlSession session = sessionFacotry.openSession() ;
 
         String statement = "studentMapper."+"addStudent";
-        Student student = new Student(3,"ww",25,"s1");
+        Student student = new Student(5,"ww",25,"s1");
 
 
         int count = session.insert(statement, student );//statement：指定执行的SQL    student：sql中需要的参数 （ ? ? ? ）
