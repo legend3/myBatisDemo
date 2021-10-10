@@ -34,7 +34,9 @@
   </dependencies>
 
   <build>
-    <!--  在pom文件标明mapper.xml的位置,用于config.xml的定位Mapper映射文件-->
+    <!--
+    SQL映射文件（mapper.xml） 和 接口放在同一个包中，还需要pom.xml中<build>标签添加：(不然找不到映射文件)
+        在pom文件标明mapper.xml的位置,用于config.xml的定位Mapper映射文件-->
     <resources>
       <resource>
         <directory>src/main/java</directory>
