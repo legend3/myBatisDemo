@@ -9,6 +9,8 @@
     <properties  resource="db.properties"/>
     <!--
         mybatis全局参数
+        cacheEnabled	在全局范围内，启用或禁用缓存	true（默认）、false
+        lazyLoadingEnabled	在全局范围内启用或禁用延迟加载。当禁用时，所有相关联的对象都将立即加载（热加载）。	true（默认）、false
         <settings>
                 <setting name="cacheEnabled" value="false"  />
                 <setting name="lazyLoadingEnabled" value="false"  />

@@ -55,7 +55,7 @@
         select stuNo,stuName from student where stuNo = #{stuNo}
     </select>
 
-    <resultMap type="student" id="studentMapping"><!-- type由conf.xml文件的typeAliases定义-->
+    <resultMap id="studentMapping" type="student"><!-- type由conf.xml文件的typeAliases定义-->
         <!-- 分为主键id 和非主键 result-->
 <!--        <id property="id"  column="stuno"  /> &lt;!&ndash; Student类中有个属性名为id对应表中stuno字段名,因此使用"使用了类型转换器" &ndash;&gt;-->
         <id property="stuNo"  column="stuno"  />
@@ -64,6 +64,7 @@
         <result property="graName"  column="graname" />
         <result property="stuSex"  column="stusex"  javaType="boolean" jdbcType="INTEGER"/>
     </resultMap>
+
     <!-- mybatisproject3:
         查询：使用了类型转换器
             2.如果 类中属性 和表中的字段 类型能够合理识别 （String-varchar2），则可以使用resultType;

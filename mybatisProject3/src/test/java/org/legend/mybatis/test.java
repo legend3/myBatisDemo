@@ -46,7 +46,7 @@ public class test {
         SqlSession session = sessionFacotry.openSession() ;
 
         StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;
-        Student student = studentMapper.queryStudentByStunoWithConverter(1) ;//接口中的方法->SQL语句
+        Student student = studentMapper.queryStudentByStunoWithConverter(3) ;//接口中的方法->SQL语句
 
         System.out.println(student);
         session.close();

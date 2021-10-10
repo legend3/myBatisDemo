@@ -23,6 +23,7 @@ import java.sql.SQLException;
  *
  * 需要注意的问题：  INTEGER
  */
+
 public class BooleanAndIntConverter extends BaseTypeHandler<Boolean> {
     //在实例化一个接口或者类的对象的时候，指明了<E>是什么类型，则以后的该接口或方法中只要有<E>或E的就全变成了填入的类型
     //java(boolean)-DB(number)
