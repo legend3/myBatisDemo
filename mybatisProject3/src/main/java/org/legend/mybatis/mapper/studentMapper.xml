@@ -54,7 +54,8 @@
             -->
         select stuNo,stuName from student where stuNo = #{stuNo}
     </select>
-    <resultMap type="student" id="studentMapping">
+
+    <resultMap type="student" id="studentMapping"><!-- type由conf.xml文件的typeAliases定义-->
         <!-- 分为主键id 和非主键 result-->
 <!--        <id property="id"  column="stuno"  /> &lt;!&ndash; Student类中有个属性名为id对应表中stuno字段名,因此使用"使用了类型转换器" &ndash;&gt;-->
         <id property="stuNo"  column="stuno"  />
