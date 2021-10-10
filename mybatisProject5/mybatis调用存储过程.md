@@ -1,4 +1,23 @@
 ## mybatis调用存储过程
+>--oracle  
+create or replace procedure queryCountByGradeWithProcedure(gName in varchar, scount out number )  
+as  
+begin  
+select count(*) into scount from student where graname = gname ;  
+end;  
+/
+
+>--mysql  
+DELIMITER $$  
+CREATE  
+PROCEDURE `queryCountByGradeWithProcedure`(IN gName VARCHAR(100), OUT scount INT(100))  
+BEGIN  
+SELECT COUNT(*) INTO scount FROM student WHERE graname = gName;  
+END$$  
+DELIMITER ;  
+
+
+
 >&lt;select id="queryCountByGradeWithProcedure" statementType="CALLABLE"  parameterType="HashMap" >  
 {  
 CALL queryCountByGradeWithProcedure(  

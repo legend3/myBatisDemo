@@ -53,17 +53,14 @@ select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname li
 			<result property="stuAge"  column="stuage" />
 			<result property="graName"  column="graname" />
 			<result property="stuSex"  column="stusex"  javaType="boolean" jdbcType="INTEGER"/>
-	
-	
 	</resultMap>
-	
+<!-- 四、截至	-->
 
 	<!-- 查询：使用了类型转换器
 	1如果 类中属性 和表中的字段 类型能够合理识别 （String-varchar2），则可以使用resultType;否则(boolean-number) 使用resultMap
 	2如果 类中属性名 和表中的字段名能够合理识别 （stuNo -stuno）则可以使用resultType;否则(id-stuno) 使用resultMap
 	 -->
-	<select id="queryStudentByStunoWithConverter" 	parameterType="int"  	
-	resultMap="studentResult" >
+	<select id="queryStudentByStunoWithConverter" 	parameterType="int" resultMap="studentResult" >
 		select * from student where stuno = #{stuno}
 	</select>
 	
