@@ -8,7 +8,7 @@
 <!-- 第三章   1.可以将配置信息 单独放入 db.properties文件中，然后再 -->
     <properties  resource="db.properties"/>
     <!--
-        全局参数
+        mybatis全局参数
         <settings>
                 <setting name="cacheEnabled" value="false"  />
                 <setting name="lazyLoadingEnabled" value="false"  />
