@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		select stuno "no",stuname "name" from student
 	</select>
 
-	<!--	4.3 输入参数:resultMap形式
+	<!--	4.3 输出参数:resultMap形式
 				临时改一下列名:
 							alter table student change column stuno id int(11);
 							alter table student change column stuname name int(11);
