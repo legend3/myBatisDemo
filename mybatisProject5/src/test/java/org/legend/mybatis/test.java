@@ -31,11 +31,11 @@ public class test {
 
         StudentMapper studentMapper = session.getMapper(StudentMapper.class);
         Map<String, Object> params = new HashMap<>();
-        params.put("gName", "s1");
+        params.put("gName", "s1");//给存储过程输入参数赋值
         studentMapper.queryCountByGradeWithProcedure(params);
 
         //获取存储过程的输出参数
-        Object count = params.get("scount");
+        Object count = params.get("scount");//获取存储过程输出参数值
 
         System.out.println(count);
         session.close();
@@ -53,7 +53,7 @@ public class test {
 
         StudentMapper studentMapper = session.getMapper(StudentMapper.class);
         Map<String, Object> params = new HashMap<>();
-        params.put("sno", 3);
+        params.put("sno", 5);
         studentMapper.deleteStuBynoWithProcedure(params);
 
         session.commit(); //提交事务

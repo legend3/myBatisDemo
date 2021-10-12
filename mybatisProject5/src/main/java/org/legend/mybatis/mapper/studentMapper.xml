@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- namespace:该mapper.xml映射文件的 唯一标识 -->
-<mapper namespace="org.legend.StudentMapper">
+<mapper namespace="org.legend.mybatis.mapper.StudentMapper">
 	<!-- 通过调用[存储过程] 实现查询 ,statementType="CALLABLE"
             存储过程的输入参数，在mybatis用Map来传递（HashMap）
         -->
