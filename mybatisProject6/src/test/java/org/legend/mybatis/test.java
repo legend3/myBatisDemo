@@ -38,11 +38,10 @@ public class test {
         SqlSession session = sessionFactory.openSession();
 
         StudentMapper studentMapper = session.getMapper(StudentMapper.class);//接口关联mapper映射
-        Student student = studentMapper.queryStuByStuno(1001);//接口中的方法->SQL语句
+        Student student = studentMapper.queryStuByStuno(1);//接口中的方法->SQL语句
         System.out.println(student);
 
         session.close();
-
     }
     @Test
     //
@@ -83,7 +82,7 @@ public class test {
         SqlSession session = sessionFactory.openSession();
 
         StudentMapper studentMapper = session.getMapper(StudentMapper.class);//接口关联mapper映射
-        List<Map<String, Object>> students = studentMapper.queryAllStudentsOutByHashMap(1000);//接口中的方法->SQL语句
+        List<Map<String, Object>> students = studentMapper.queryAllStudentsOutByHashMap();//接口中的方法->SQL语句
         System.out.println(students);
 
         session.close();

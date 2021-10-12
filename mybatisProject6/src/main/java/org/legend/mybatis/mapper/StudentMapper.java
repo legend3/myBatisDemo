@@ -16,7 +16,7 @@ public interface StudentMapper {
 		Student queryStuByStuno(int id);
 		List<Student> queryStudentByhomeaddress(Student student);
 		Map<String,Object> queryStudentOutByHashMap(int stuNo);
-		List<Map<String,Object>> queryAllStudentsOutByHashMap(int stuNo);
+		List<Map<String,Object>> queryAllStudentsOutByHashMap();
 		Student queryStudentById(int id);
 		Student queryStudentByIdWithHashMap(int id);
 

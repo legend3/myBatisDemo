@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		select id,name from student where id = #{id}
 	</select>
 	<resultMap type="student" id="queryStudentByIdMap">
-		<!-- 指定类中的属性 和 表中的字段 对应关系 -->
+		<!-- 当类属性名与表中字段名不一致时，指定类中的属性 和 表中的字段 映射对应关系 -->
 		<id property="stuNo"  column="id" />
 		<result property="stuName" column="name" />
 	</resultMap>
