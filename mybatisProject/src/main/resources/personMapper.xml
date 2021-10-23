@@ -1,6 +1,7 @@
-<!--  mybatis映射文件  -->
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  mybatis映射文件<数据库对象映射实体类>  -->
 <mapper namespace="personMapper"><!-- 映射文件的相对路径 -->
 
     <select id="queryPersonById" resultType="org.legend.mybatis.entity.Person" parameterType="int">
