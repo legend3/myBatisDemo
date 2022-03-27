@@ -10,10 +10,10 @@
     <!--
         mybatis全局参数
         cacheEnabled	在全局范围内，启用或禁用缓存	true（默认）、false
-        lazyLoadingEnabled	在全局范围内启用或禁用延迟加载。当禁用时，所有相关联的对象都将立即加载（热加载）。	true（默认）、false
+        lazyLoadingEnabled	在全局范围内启用或禁用延迟加载。当禁用时，所有相关联的对象都将立即加载（热加载）。true（默认）、false
         <settings>
-                <setting name="cacheEnabled" value="false"  />
-                <setting name="lazyLoadingEnabled" value="false"  />
+                <setting name="cacheEnabled" value="false" />
+                <setting name="lazyLoadingEnabled" value="false" />
         </settings>
  	-->
     <!-- 设置单个/多个别名 -->
@@ -28,10 +28,9 @@
     <environments default="mysql">
         <!-- 例如, (此时是)开发环境（自己的计算机） -->
         <environment id="mysql">
-
             <!-- 事务提交方式：
                     JDBC:利用JDBC方式处理事务（commit  rollback  close）
-                    MANAGED：将事务交由 其他组件去托管（spring ,jobss）,默认 会关闭连接。
+                    MANAGED：将事务交由其他组件去托管（spring ,jobss）,默认会关闭连接。
 
                 <transactionManager type="MANAGED"/>
                     <property name="closeConnection" value="false"/>
@@ -39,9 +38,9 @@
             <transactionManager type="JDBC"/>
 
             <!-- 数据源类型：
-						UNPOOLED:传统的JDBC模式（每次访问数据库，均需要 打开、关闭等数据库操作，但是 打开、关闭数据库是比较消耗性能的）
-						POOLED：使用数据库连接池
-						JNDI：从tomcat中获取一个内置的数据库连接池 （数据库连接池-数据源  ）
+						UNPOOLED: 传统的JDBC模式（每次访问数据库，均需要 打开、关闭等数据库操作，但是 打开、关闭数据库是比较消耗性能的）
+						POOLED: 使用数据库连接池
+						JNDI: 从tomcat中获取一个内置的数据库连接池(数据库连接池-数据源)
 				 -->
             <dataSource type="POOLED">
                 <!-- 配置数据库信息 -->
@@ -51,7 +50,6 @@
                 <property name="password" value="${password}"/>
             </dataSource>
         </environment>
-
         <!-- 真正的项目应该在   发布的那台计算机上运行 -->
         <environment id="oracle">
             <transactionManager type="JDBC"/>

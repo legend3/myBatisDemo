@@ -8,8 +8,8 @@
 
 
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
   </properties>
 
   <parent>
@@ -36,7 +36,8 @@
   <build>
     <!--
     SQL映射文件（mapper.xml） 和 接口放在同一个包中，还需要pom.xml中<build>标签添加：(不然找不到映射文件)
-        在pom文件标明mapper.xml的位置,用于config.xml的定位Mapper映射文件-->
+        在pom文件标明mapper.xml的位置,用于config.xml的定位Mapper映射文件
+        -->
     <resources>
       <resource>
         <directory>src/main/java</directory>
@@ -53,8 +54,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <source>17</source>
-          <target>17</target>
+          <source>8</source>
+          <target>8</target>
         </configuration>
       </plugin>
     </plugins>

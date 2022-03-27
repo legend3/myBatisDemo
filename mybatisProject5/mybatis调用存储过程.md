@@ -3,7 +3,7 @@
 create or replace procedure queryCountByGradeWithProcedure(gName in varchar, scount out number )  
 as  
 begin  
-select count(*) into scount from student where graname = gname ;  
+select count(*) into scount from student where graname = gname;  
 end;  
 /
 
@@ -14,7 +14,7 @@ PROCEDURE `queryCountByGradeWithProcedure`(IN gName VARCHAR(100), OUT scount INT
 BEGIN  
 SELECT COUNT(*) INTO scount FROM student WHERE graname = gName;  
 END$$  
-DELIMITER ;  
+DELIMITER;  
 
 
 

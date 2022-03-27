@@ -4,8 +4,8 @@
 <!--  mybatis映射文件<数据库对象与javaMapper类映射>  -->
 <mapper namespace="personMapper"><!-- 映射文件的相对路径 -->
 
-    <select id="queryPersonById" resultType="org.legend.mybatis.entity.Person" parameterType="int">
-        select * from person where id = #{id}<!-- 没有;号 -->
+    <select id="queryPersonById" parameterType="int" resultType="org.legend.mybatis.entity.Person">
+        select * from `person` where id = #{id}   <!-- 没有;号 -->
     </select>
 
 </mapper>

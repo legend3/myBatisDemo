@@ -18,18 +18,19 @@
 即 resultType="org.lanqiao.entity.Student"
 
 
-
 ## 注意事项：
 > a. 如果使用的 事务方式为 jdbc,则需要 手工commit提交，即session.commit();  
 b.所有的标签 \<select> \<update>等 ，都必须有sql语句，但是sql参数值可选  
 select* from student  where stuno = #{xx}  
-sql有参数：session.insert(statement, 参数值 );  
-sql没参数：session.insert(statement);
+sql有参数：session.insert(statement, 参数值);  
+sql没参数：session.insert(statement);  
 
 
 
 # 二、mapper动态代理方式的crud （MyBatis接口开发）:
 ### 原则：约定优于配置
+>比如说模型中有一个名为User的类，那么数据库中对应的表就会默认命名为user。
+> 只有在偏离这一个约定的时候，例如想要将该表命名为system_user，才需要写有关这个名字的配置。
 
 ## 硬编码方式
 `abc.java  
@@ -45,23 +46,23 @@ con.setName("myProject");`
 ## 具体实现的步骤：
 > 1.基础环境：mybatis.jar/ojdbc.jar、conf.xml、mapper.xml  
 2.（不同之处）  
-约定的目标： 省略掉statement,即根据约定 直接可以定位出SQL语句
+约定的目标： 省略掉statement,即根据约定 直接可以定位出SQL语句  
 
 >a.接口，接口中的方法必须遵循以下约定:  
-1.方法名和mapper.xml文件中标签的id值相同
-2.方法的 输入参数 和mapper.xml文件中标签的 parameterType类型一致 (如果mapper.xml的标签中没有 parameterType，则说明方法没有输入参数)  
-3.方法的返回值  和mapper.xml文件中标签的 resultType类型一致 （无论查询结果是一个 还是多个（student、List<Student>），在mapper.xml标签中的resultType中只写 一个（Student）；如果没有resultType，则说明方法的返回值为void）  
-
+1.方法名和mapper.xml文件中标签的id值相同  
+2.方法的 输入参数 和mapper.xml文件中标签的parameterType类型一致 (如果mapper.xml的标签中没有 parameterType，则说明方法没有输入参数)  
+3.方法的返回值  和mapper.xml文件中标签的 resultType类型一致 （无论查询结果是一个 还是多个（student、List<Student>），  
+> 在mapper.xml标签中的resultType中只写 一个（Student）；如果没有resultType，则说明方法的返回值为void）  
 除了以上约定，要实现 接口中的方法  和  Mapper.xml中SQL标签一一对应，还需要以下1点：  
 namespace的值 ，就是  接口的全类名（ 接口 - mapper.xml 一一对应映射）
 
 
 ### 匹配的过程：（约定的过程）
 1. 根据 接口名 找到 mapper.xml文件（根据的是namespace=接口全类名）  
-2. 根据 接口的方法名 找到 mapper.xml文件中的SQL标签 （方法名=SQL标签Id值）
+2. 根据 接口的方法名 找到 mapper.xml文件中的SQL标签 （方法名=SQL标签Id值） 
 
-以上2点可以保证： 当我们调用接口中的方法时，
-程序能自动定位到 某一个Mapper.xml文件中的sqL标签
+以上2点可以保证： 当我们调用接口中的方法时，  
+程序能自动定位到 某一个Mapper.xml文件中的sqL标签  
 
 
 > 习惯：SQL映射文件（mapper.xml） 和 接口放在同一个包中 （注意修改conf.xml中加载mapper.xml文件的路径）  
@@ -79,22 +80,38 @@ SQL映射文件（mapper.xml） 和 接口放在同一个包中，还需要pom.x
       </resource>  
     </resources>  `
 
-以上，可以通过接口的方法->SQL语句
+**以上，可以通过接口的方法->SQL语句**
 
-执行：  
+### 执行：  
 `StudentMapper studentMapper = session.getMapper(StudentMapper.class);
-studentMapper.方法(); `
-
+studentMapper.接口方法(); `
 通过session对象获取接口（session.getMapper(接口.class);），再调用该接口中的方法，程序会自动执行该方法对应的SQL。  
 
+网上资料补充：https://www.cnblogs.com/zjdxr-up/p/8681382.html  
+mybatis配置文件namespace用法总结  
+由于在应用过程中，发现namespace在配置文件中的重要性，以及配置的影响，在网上看了很多博客，发现很多人对namespace存在误解，  
+所以总结一下namespace的用以及个人的理解：  
+官网（http://www.mybatis.org/mybatis-3/zh/getting-started.html）的解释如下：  
 
-网上资料补充：https://www.cnblogs.com/zjdxr-up/p/8681382.html
+namespace即空间命名名称，用于区分实现数据持久化的方式。namespace一般绑定对应的文件的全路径，有三种全路径：namespace绑定实体类的全路径，绑定dao接口的全路径，绑定mapper的sql.xml文件。  
+第一种：namespace绑定实体类的全路径：  
+当namespace绑定的是实体类的全路径时，其实现数据持久化的方式为无代理模式实现数据持久化。需要手动实现dao层的接口。
+
+    <mapper namespace="com.system.pojo.LiveInfo"></namespace>  
+第二种：namespace绑定dao层接口的全路径：  
+当namespace绑定的是dao接口的全路径时，其实现数据持久化的方式为有代理模式实现数据持久化。  
+即会自动产生代理，自动实现数据的持久化，不需要实现dao层的接口。  
+<mapper namespace="com.system.dao.LiveInfoDao"></namespace>  
+第三种：namespace绑定的是mapper接口对应的sql.xml文件是，其也是有代理模式自动实现数据持久化。  
+但mapper接口对应的sql.xml文件名必须保持一致才能自动实现数据持久化。  
+<mapper namespace="com.system.sql.LiveInfoMapper"></namespace>  
+总结：本课中都是第三种，绑定mapper的sql.xml文件.
 
 
 ## 优化
 ### 1.可以将配置信息 单独放入 db.properties文件中，然后再动态引入
 
-db.properties：  
+db.properties:  
 k=v
 
     <configuration>
@@ -125,8 +142,6 @@ k=v
 | mapUnderscoreToCamelCase	|当在数据表中遇到有下划线的字段时，自动映射到相应驼峰式形式的Java属性名。例如，会自动将数据表中的stu_no字段，映射到POJO类的stuNo属性。	|true、false（默认）
 | lazyLoadTriggerMethods	|指定触发延迟加载的对象的方法	|equals、clone、hashCode、toString|
 
-
-
 ### 3.别名 conf.xml
     a.设置单个别名  
     b.批量设置别名
@@ -137,94 +152,76 @@ k=v
 		<package name="org.lanqiao.entity"/>  
 	</typeAliases>  
 
-除了自定义别名外，MyBatis还内置了一些常见类的别名（mybatis给一些java类取的别名！）。
+除了自定义别名外，MyBatis还内置了一些常见类的别名(mybatis给一些java类取的别名！)。
 ![alias](MyBatis内置别名.png)
 
-## 类型处理器（类型转换器）
-### 1.MyBatis自带一些常见的类型处理器
-    int（java）  - number(jdbc)
+## 类型处理器（类型转换器）  
+### 1.MyBatis自带一些常见的类型处理器  
+    int（java） - number(jdbc)
 
 >Mybatis内置的类型处理器如表所示
 
-|类型处理器|	Java类型|	JDBC类型|
-| :-----| ----: | :----: |
-|BooleanTypeHandler| 	Boolean，boolean |	任何兼容的布尔值|
-|ByteTypeHandler| 	Byte，byte 	|任何兼容的数字或字节类型|
-|ShortTypeHandler |	Short，short 	|任何兼容的数字或短整型|
-|IntegerTypeHandler| 	Integer，int |	任何兼容的数字和整型|
-|LongTypeHandler 	|Long，long |	任何兼容的数字或长整型|
-|FloatTypeHandler |	Float，float |	任何兼容的数字或单精度浮点型|
-|DoubleTypeHandler |	Double，double 	|任何兼容的数字或双精度浮点型|
-|BigDecimalTypeHandler|	BigDecimal |	任何兼容的数字或十进制小数类型|
-|StringTypeHandler 	|String 	|CHAR和VARCHAR类型|
-|ClobTypeHandler 	|String 	|CLOB和LONGVARCHAR类型|
-|NStringTypeHandler |	String |	NVARCHAR和NCHAR类型|
-|NClobTypeHandler 	|String 	|NCLOB类型|
-|ByteArrayTypeHandler| 	byte[] 	|任何兼容的字节流类型|
-|BlobTypeHandler |	byte[] 	|BLOB和LONGVARBINARY类型|
-|DateTypeHandler |	Date（java.util）	|TIMESTAMP类型|
-|DateOnlyTypeHandler |	Date（java.util）	|DATE类型|
-|TimeOnlyTypeHandler |	Date（java.util）	|TIME类型
+|类型处理器|	            Java类型|	            JDBC类型|
+| :-----                    | ----: |               :----: |
+|BooleanTypeHandler| 	    Boolean，            boolean |	任何兼容的布尔值|
+|ByteTypeHandler| 	        Byte，               byte 	|任何兼容的数字或字节类型|
+|ShortTypeHandler |	        Short，              short 	|任何兼容的数字或短整型|
+|IntegerTypeHandler| 	    Integer，            int |	任何兼容的数字和整型|
+|LongTypeHandler 	|       Long，               long |	任何兼容的数字或长整型|
+|FloatTypeHandler |	        Float，              float |	任何兼容的数字或单精度浮点型|
+|DoubleTypeHandler |	    Double，             double 	|任何兼容的数字或双精度浮点型|
+|BigDecimalTypeHandler|	    BigDecimal |	    任何兼容的数字或十进制小数类型|
+|StringTypeHandler 	|       String 	|           CHAR和VARCHAR类型|
+|ClobTypeHandler 	|       String 	|            CLOB和LONGVARCHAR类型|
+|NStringTypeHandler |	    String |	        NVARCHAR和NCHAR类型|
+|NClobTypeHandler 	|       String 	|           NCLOB类型|
+|ByteArrayTypeHandler| 	    byte[] 	|           任何兼容的字节流类型|
+|BlobTypeHandler |	        byte[] 	|           BLOB和LONGVARBINARY类型|
+|DateTypeHandler |	        Date（java.util）	|TIMESTAMP类型|
+|DateOnlyTypeHandler |	    Date（java.util）	|DATE类型|
+|TimeOnlyTypeHandler |	    Date（java.util）	|TIME类型
 |SqlTimestampTypeHandler| 	Timestamp（java.sql）	|TIMESTAMP类型|
-|SqlDateTypeHandler| 	Date（java.sql）	|DATE类型|
-|SqlTimeTypeHandler |	Time（java.sql）	|TIME类型|
-|ObjectTypeHandler| 	任意	其他或未指定类型|
-|EnumTypeHandler| 	Enumeration类型	|VARCHAR。任何兼容的字符串类型，作为代码存储（而不是索引）。|
-
-
+|SqlDateTypeHandler| 	    Date（java.sql）	|DATE类型|
+|SqlTimeTypeHandler |	    Time（java.sql）	|TIME类型|
+|ObjectTypeHandler| 	    任意	                其他或未指定类型|
+|EnumTypeHandler| 	        Enumeration类型	|   VARCHAR。任何兼容的字符串类型，作为代码存储（而不是索引）。|
 
 ### 2.自定义MyBatis类型处理器
-	java -数据库(jdbc类型)  
+	java - 数据库(jdbc类型)  
 示例：  
 >实体类Student :  boolean   stuSex  	  
-true:男  
+true: 男  
 false：女  
 
 >表student：	number  stuSex  
 1:男  
 0：女  
-自定义类型转换器（boolean -number）步骤：   
+自定义类型转换器（boolean - number）步骤：   
 a.创建转换器：需要实现TypeHandler接口  
 通过阅读源码发现，此接口有一个实现类 BaseTypeHandler ，因此 要实现转换器有2种选择：  
 i.实现接口TypeHandler接口  
 ii.继承BaseTypeHandler  
 b.配置conf.xml  
 
-需要注意的问题：  INTEGER  
+需要注意的问题：  INTEGER
 
-    insert into student(stuno,stuname,stuage,graname,stusex) values(#{stuNo},#{stuName},#{stuAge},#{graName} ,#{stuSex ,javaType=boolean  ,jdbcType=INTEGER   } )  
+    insert into student(stuno,stuname,stuage,graname,stusex) values(#{stuNo},#{stuName},#{stuAge},#{graName}, 
+        #{stuSex, javaType=boolean, jdbcType=INTEGER})  
 
-注意#{stuNo} 中存放的是 属性值，需要严格区分大小写。  
-
-
+注意#{stuNo}中存放的是属性值，**需要严格区分大小写**。  
 
 ##resultMap可以实现2个功能：
 1.类型转换  
-2.属性-字段的映射关系
+2.属性-字段的映射关系  
 
-    <select id="queryStudentByStuno" 	parameterType="int"  	resultMap="studentMapping" >  
+    <select id="queryStudentByStuno" parameterType="int" resultMap="studentMapping" >  
             select * from student where stuno = #{stuno}  
-        </select>
-        <resultMap type="student" id="studentMapping">  
-                <!-- 分为主键id 和非主键 result-->  
-                <id property="id"  column="stuno"  />  
-                <result property="stuName"  column="stuname" />  
-                <result property="stuAge"  column="stuage" />  
-                <result property="graName"  column="graname" />  
-                <result property="stuSex"  column="stusex"  javaType="boolean" jdbcType="INTEGER"/>
-        </resultMap>
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
+    </select>
+    <resultMap type="student" id="studentMapping">  
+            <!-- 分为主键id 和非主键 result-->  
+            <id property="id"  column="stuno"  />  
+            <result property="stuName"  column="stuname" />  
+            <result property="stuAge"  column="stuage" />  
+            <result property="graName"  column="graname" />  
+            <result property="stuSex"  column="stusex"  javaType="boolean" jdbcType="INTEGER"/>
+    </resultMap>

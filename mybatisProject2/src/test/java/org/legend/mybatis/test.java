@@ -54,11 +54,11 @@ public class test {
         SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
         SqlSession session = sessionFacotry.openSession() ;
 
-        String statement = "studentMapper."+"addStudent";
-        Student student = new Student(5,"ww",25,"s1");
+        String statement = "studentMapper." + "addStudent";
+        Student student = new Student(9,"lilei",25,"s1");
 
 
-        int count = session.insert(statement, student );//statement：指定执行的SQL    student：sql中需要的参数 （ ? ? ? ）
+        int count = session.insert(statement, student);//statement：指定执行的SQL    student：SQL中需要的参数 （ ? ? ? ）
         session.commit(); //提交事务
 
         System.out.println("增加"+count+"个学生");

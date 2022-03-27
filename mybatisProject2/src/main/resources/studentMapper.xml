@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- namespace:该mapper.xml映射文件的 唯一标识
-     补充:第三种：namespace绑定的是mapper接口对应的sql.xml文件是，其也是有代理模式自动实现数据持久化。
+<!-- namespace: 该mapper.xml映射文件的 唯一标识
+     补充:  第三种：namespace绑定的是mapper接口对应的sql.xml文件时，其也是有代理模式自动实现数据持久化。
 		但mapper接口对应的sql.xml文件名必须保持一致才能自动实现数据持久化。
 			<mapper namespace="com.system.sql.LiveInfoMapper"></namespace>
      -->
@@ -26,7 +26,7 @@
     </select>
 
     <insert id="addStudent" parameterType="org.legend.mybatis.entity.Student" >
-        insert into student(stuno,stuname,stuage,graname) values(#{stuNo},#{stuName},#{stuAge},#{graName}  )
+        insert into student(stuno,stuname,stuage,graname) values(#{stuNo}, #{stuName}, #{stuAge}, #{graName})
     </insert>
 
     <delete id="deleteStudentByStuno"  parameterType="int">

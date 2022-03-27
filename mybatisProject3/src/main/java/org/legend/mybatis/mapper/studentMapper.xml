@@ -9,7 +9,7 @@
   a.接口，接口中的方法必须遵循以下约定：
 		 *1.方法名和mapper.xml文件中标签的id值相同
 		 * 2.方法的 输入参数 和mapper.xml文件中标签的 parameterType类型一致 (如果mapper.xml的标签中没有 parameterType，则说明方法没有输入参数)
-		 * 3.方法的返回值  和mapper.xml文件中标签的 resul``tType类型一致 （无论查询结果是一个 还是多个（student、List<Student>），在mapper.xml标签中的resultType中只写 一个（Student）；如果没有resultType，则说明方法的返回值为void）
+		 * 3.方法的返回值和mapper.xml文件中标签的 resultType类型一致 （无论查询结果是一个 还是多个（student、List<Student>），在mapper.xml标签中的resultType中只写 一个（Student）；如果没有resultType，则说明方法的返回值为void）
 
 除了以上约定，要实现 接口中的方法  和  Mapper.xml中SQL标签一一对应，还需要以下1点：
 	namespace的值 ，就是  接口的全类名（ 接口 - mapper.xml 一一对应映射）
@@ -54,10 +54,9 @@
             -->
         select stuNo,stuName from student where stuNo = #{stuNo}
     </select>
-
-    <resultMap id="studentMapping" type="student"><!-- type由conf.xml文件的typeAliases定义-->
-        <!-- 分为主键id 和非主键 result-->
-<!--        <id property="id"  column="stuno"  /> &lt;!&ndash; Student类中有个属性名为id对应表中stuno字段名,因此使用"使用了类型转换器" &ndash;&gt;-->
+    <resultMap id="studentMapping" type="student"><!-- type(返回值类型)由conf.xml文件的typeAliases定义-->
+        <!-- 分为主键id和非主键 result-->
+<!--        <id property="id"  column="stuno" /> &lt;!&ndash; Student类中有个属性名为id对应表中stuno字段名, 因此resultMap实现属性-字段的映射关系 &ndash;&gt;-->
         <id property="stuNo"  column="stuno"  />
         <result property="stuName"  column="stuname" />
         <result property="stuAge"  column="stuage" />
@@ -74,26 +73,23 @@
     <select id="queryStudentByStunoWithConverter" parameterType="int" resultMap="studentResult" >
         select * from student where stuno = #{stuno}
     </select>
-
-    <resultMap type="student" id="studentResult">
+    <resultMap id="studentResult" type="student">
         <!-- 分为主键id 和非主键 result-->
-        <id property="stuNo"  column="stuno" />
-        <result property="stuName"  column="stuname" />
-        <result property="stuAge"  column="stuage" />
-        <result property="graName"  column="graname" />
-        <result property="stuSex"  column="stusex"  javaType="boolean" jdbcType="INTEGER"/>
+        <id property="stuNo" column="stuno" />
+        <result property="stuName" column="stuname" />
+        <result property="stuAge" column="stuage" />
+        <result property="graName" column="graname" />
+        <result property="stuSex" column="stusex" javaType="boolean" jdbcType="INTEGER"/>
     </resultMap>
 
-
-    <!-- 带转换器的增加 -->
+    <!-- 带转换器的增加(无返回值时) -->
     <insert id="addStudentWithConverter" parameterType="student" >
-        insert into student(stuno,stuname,stuage,graname,stusex) values(#{stuNo},#{stuName},#{stuAge},#{graName} ,#{stuSex ,javaType=boolean  ,jdbcType=INTEGER   } )
+        insert into student(stuno,stuname,stuage,graname,stusex) values(#{stuNo},#{stuName},#{stuAge},#{graName},#{stuSex ,javaType=boolean,jdbcType=INTEGER   } )
     </insert>
 
     <insert id="addStudent" parameterType="Student" >
         insert into student(stuno,stuname,stuage,graname) values(#{stuNo},#{stuName},#{stuAge},#{graName}  )
     </insert>
-
 
     <delete id="deleteStudentByStuno"  parameterType="int">
         delete from student where stuno = #{stuno}
