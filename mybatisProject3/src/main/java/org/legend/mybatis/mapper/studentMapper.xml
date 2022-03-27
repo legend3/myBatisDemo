@@ -30,7 +30,6 @@
 			<mapper namespace="com.system.sql.LiveInfoMapper"></namespace>
 -->
 <mapper namespace="org.legend.mybatis.mapper.StudentMapper">
-
     <!--  后续通过  namespace.id-->
     <!-- mybatisproject2:
             parameterType:输入参数(stuNo)的类型
@@ -84,7 +83,8 @@
 
     <!-- 带转换器的增加(无返回值时) -->
     <insert id="addStudentWithConverter" parameterType="student" >
-        insert into student(stuno,stuname,stuage,graname,stusex) values(#{stuNo},#{stuName},#{stuAge},#{graName},#{stuSex ,javaType=boolean,jdbcType=INTEGER   } )
+        insert into student(stuno,stuname,stuage,graname,stusex) values(#{stuNo},#{stuName},#{stuAge},#{graName},
+                                                                        #{stuSex, javaType=boolean,jdbcType=INTEGER} )
     </insert>
 
     <insert id="addStudent" parameterType="Student" >

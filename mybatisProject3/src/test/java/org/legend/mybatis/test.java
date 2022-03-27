@@ -25,7 +25,7 @@ public class test {
         SqlSession session =  sessionFactory.openSession();
 
         //调Mapper接口,取代statement
-        //        String statement = "studentMapper."+"queryAllStudents";
+        //String statement = "studentMapper."+"queryAllStudents";
         //通过session对象获取接口（session.getMapper(接口.class);），再调用该接口中的方法，程序会自动执行该方法对应的SQL。
         StudentMapper studentMapper = session.getMapper(StudentMapper.class);//获取接口，就是获取映射文件！
         //调用接口方法，从而定位对应的sql语句;(不需要实现类实现接口！直接调用接口方法找sql语句)
