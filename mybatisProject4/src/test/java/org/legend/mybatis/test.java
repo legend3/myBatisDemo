@@ -144,12 +144,11 @@ public class test {
         SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
         SqlSession session = sessionFacotry.openSession() ;
 
-
-        StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
         Map<String, Object> studentMap = new HashMap<>();
         studentMap.put("stuAge", 23);//key:输入参数名，value:赋值输入参数
         studentMap.put("stuName", "jack");//key:输入参数名，value:赋值输入参数
 
+        StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;
         List<Student> students = studentMapper.queryStudentBystuageOrstuNameWithHashMap(studentMap) ;//接口的方法->SQL
 
         System.out.println(students);

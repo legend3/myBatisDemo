@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 							alter table student change column stuname name int(11);
 		-->
 	<select id="queryStudentById" 	 parameterType="int"	resultMap="queryStudentByIdMap" >
-		select id,name from student where id = #{id}
+		select id, name from student where id = #{id}
 	</select>
 	<resultMap type="student" id="queryStudentByIdMap">
 		<!-- 当类属性名与表中字段名不一致时，指定类中的属性 和 表中的字段 映射对应关系 -->
@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 			数据库字段名找不到对应的属性名，不会报错而是给个默认值(0、null等)
 			所以，如果10个字段，但发现 某一个字段结果始终为默认值（0，0.0，null），则可能是 表的字段  和 类的属性名字写错
 	-->
-	<select id="queryStudentByIdWithHashMap" 	 parameterType="int"	resultType="student" >
+	<select id="queryStudentByIdWithHashMap" parameterType="int" resultType="student" >
 		select id "stuNo",name "stuName" from student where id = #{id}
 	</select>
 </mapper>
