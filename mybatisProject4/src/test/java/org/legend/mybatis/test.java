@@ -45,7 +45,7 @@ public class test {
 
         //可以通过build的第二参数 指定数据库环境
         SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
-        SqlSession session = sessionFacotry.openSession() ;
+        SqlSession session = sessionFacotry.openSession();
 
         StudentMapper studentMapper = session.getMapper(StudentMapper.class) ;
         Student student = studentMapper.queryStudentByStuno(1) ;//接口中的方法->SQL语句
@@ -76,14 +76,14 @@ public class test {
     public void queryAllStudents() throws IOException {
         //Connection -  SqlSession操作MyBatis
         //conf.xml - > reader
-        Reader reader = Resources.getResourceAsReader("conf.xml") ;
+        Reader reader = Resources.getResourceAsReader("conf.xml");
         //reader  ->SqlSession
         //可以通过build的第二参数 指定数据库环境
-        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development") ;
-        SqlSession session = sessionFacotry.openSession() ;
+        SqlSessionFactory sessionFacotry = new SqlSessionFactoryBuilder().build(reader,"development");
+        SqlSession session = sessionFacotry.openSession();
 
 
-//					List<Student> students = session.selectList(statement ) ;
+//      List<Student> students = session.selectList(statement ) ;
         StudentMapper studentMapper = session.getMapper( StudentMapper.class) ;
         List<Student> students = studentMapper.queryAllStudents() ;//接口的方法->SQL
 

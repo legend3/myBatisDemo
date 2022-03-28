@@ -6,7 +6,6 @@ public class Student {
 	private int stuAge ;
 	private String graName ;
 	private boolean stuSex ;
-	
 	private Address address;//家庭、学校(嵌套类型对象)
 	
 	public Student(int stuNo, String stuName, int stuAge, String graName) {

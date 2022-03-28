@@ -203,12 +203,12 @@ i.实现接口TypeHandler接口
 ii.继承BaseTypeHandler  
 b.配置conf.xml  
 
-需要注意的问题：  INTEGER
+需要注意的问题:    INTEGER(jdbcType时要是大写的！)
 
     insert into student(stuno,stuname,stuage,graname,stusex) values(#{stuNo},#{stuName},#{stuAge},#{graName}, 
         #{stuSex, javaType=boolean, jdbcType=INTEGER})  
 
-注意#{stuNo}中存放的是属性值，**需要严格区分大小写**。  
+注意#{stuNo}中存放的是(类)属性值，**需要严格区分大小写**。  
 
 ##resultMap可以实现2个功能：
 1.类型转换  

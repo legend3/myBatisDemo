@@ -23,7 +23,10 @@
         <!--  批量定义别名  （别名 忽略大小写），以下会自动将该包中的所有类 批量定义别名： 别名就是类名（不带包名，忽略大小写）   -->
         <package name="org.legend.mybatis.entity"/>
     </typeAliases>
-
+    <!--  类型转换器(其实不写也可以？！)  -->
+    <typeHandlers>
+        <typeHandler handler="org.legend.mybatis.converter.BooleanAndIntConverter" javaType="Boolean" jdbcType="INTEGER" />
+    </typeHandlers>
     <!-- 第二章 通过environments的default值 和  environment的 id 来指定 MyBatis运行时的数据库环境  "当前运行哪个环境"-->
     <environments default="mysql">
         <!-- 例如, (此时是)开发环境（自己的计算机） -->

@@ -8,27 +8,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	<!--parameterType:输入参数的类型
 	resultType：查询返回结果值的类型  ，返回类型  -->
 
-
 	<!--
 		1.通过接口方法传值给#{}、${}}
 		 -->
-	<select id="queryStudentByStuno" 	parameterType="int"  	resultMap="studentMapping" >
+	<select id="queryStudentByStuno" 	parameterType="int" resultMap="studentMapping" >
 		select * from student where stuno = ${xxx}
 	</select>
 	
-	<select id="queryStudentByStuname" 	parameterType="string"  	resultType="student" >
+	<select id="queryStudentByStuname" 	parameterType="string" resultType="student" >
 		select stuno,stuname,stuage  from student where stuname = '${value}'
 	</select>
 
-	<select id="queryStudentOrderByColumn" 	parameterType="string"	resultType="student" >
+	<select id="queryStudentOrderByColumn" 	parameterType="string" resultType="student" >
 		select stuno,stuname,stuage  from student  order by ${value} asc
 	</select>
 
-	<select id="queryStudentBystuageOrstuName" 	parameterType="student"	resultType="student" >
-<!-- 模拟查询方式一： -->
-		<!-- select stuno,stuname,stuage  from student where stuage= #{stuAge} or stuname like '${stuName}' -->
-<!-- 模拟查询方式二：-->
-select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '%${stuName}%'
+	<select id="queryStudentBystuageOrstuName" parameterType="student"	resultType="student" >
+		<!-- 模拟查询方式一： -->
+				<!-- select stuno,stuname,stuage  from student where stuage= #{stuAge} or stuname like '${stuName}' -->
+		<!-- 模拟查询方式二：-->
+		select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname like '%${stuName}%'
 	</select>
 
 	<select id="queryStudentBystuageOrstuNameWithHashMap" 	parameterType="hashmap"	resultType="student" >
@@ -45,14 +44,13 @@ select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname li
 	<select id="queryStudentByaddress" 	parameterType="student"	resultType="student" > 
 		select stuno,stuname,stuage from student where homeaddress = #{address.homeAddress}  or schooladdress = '${address.schoolAddress}'
 	</select>
-	
 	<resultMap type="student" id="studentMapping">
 			<!-- 分为主键id 和非主键 result-->
-			<id property="stuNo"  column="stuno"  />
+			<id property="stuNo"  column="stuno" />
 			<result property="stuName"  column="stuname" />
 			<result property="stuAge"  column="stuage" />
 			<result property="graName"  column="graname" />
-			<result property="stuSex"  column="stusex"  javaType="boolean" jdbcType="INTEGER"/>
+			<result property="stuSex"  column="stusex" javaType="boolean" jdbcType="INTEGER" />
 	</resultMap>
 <!-- 四、截至	-->
 
@@ -60,10 +58,9 @@ select stuno,stuname,stuage  from student where stuage= #{stuAge}  or stuname li
 	1如果 类中属性 和表中的字段 类型能够合理识别 （String-varchar2），则可以使用resultType;否则(boolean-number) 使用resultMap
 	2如果 类中属性名 和表中的字段名能够合理识别 （stuNo -stuno）则可以使用resultType;否则(id-stuno) 使用resultMap
 	 -->
-	<select id="queryStudentByStunoWithConverter" 	parameterType="int" resultMap="studentResult" >
+	<select id="queryStudentByStunoWithConverter" parameterType="int" resultMap="studentResult" >
 		select * from student where stuno = #{stuno}
 	</select>
-	
 	<resultMap type="student" id="studentResult">
 			<!-- 分为主键id 和非主键 result-->
 			<id property="stuNo"  column="stuno"  />
